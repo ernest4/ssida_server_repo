@@ -11,7 +11,8 @@ import ssida_app.views
 # url(r'^blog/', include('blog.urls')),
 
 urlpatterns = [
-    url(r'^$', ssida_app.views.index, name='index'),
+    url(r'^$', ssida_app.views.index, name=''),
+    url('index', ssida_app.views.index, name='index'),
     url(r'^db', ssida_app.views.db, name='db'),
     path('admin/', admin.site.urls),
 ]
