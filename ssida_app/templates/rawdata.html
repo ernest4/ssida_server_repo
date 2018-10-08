@@ -11,7 +11,26 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <div id="rawdata"></div>
+      <div id="rawdata">
+        <div class="table-condensed">
+          <table class="table table-condensed">
+              <thead>
+                <tr>
+                  {% for key in keys %}
+                    <th>{{key}}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {% for value in params %}
+                    <td>{{value}}</td>
+                  {% endfor %}
+                </tr>
+              </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
