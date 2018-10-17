@@ -22,11 +22,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  {% for key, value in params.items %}
-                    <td>{{value}}</td>
+                  {% for value in params %}
+                  <tr>
+                    {% for key,values in value.items %}
+                    <td>{{values}}</td>
+                    {% endfor %}
+                  </tr>
                   {% endfor %}
-                </tr>
+                
               </tbody>
           </table>
         </div>
