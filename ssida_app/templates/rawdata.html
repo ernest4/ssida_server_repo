@@ -23,7 +23,7 @@
               </thead>
               <tbody>
                 <tr>
-                  {% for value in params %}
+                  {% for key, value in params.items %}
                     <td>{{value}}</td>
                   {% endfor %}
                 </tr>
