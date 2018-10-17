@@ -29,7 +29,7 @@ def rawData(request):
         live_data.gyroscope_z = params.get('gyroscope_z')
         live_data.timestamp = params.get('timestamp')
         live_data.save()
-    return render(request, 'rawdata.html', {'params': params, 'keys': params.keys()})
+    #return render(request, 'livedata.html', {'params': params, 'keys': params.keys()})
 
 def storedData(request):
     return render(request, 'storeddata.html')
