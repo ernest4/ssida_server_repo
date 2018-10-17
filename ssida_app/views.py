@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from .models import Greeting, LiveData
+import datetime
 
 # Create your views here.
 def index(request):
@@ -9,7 +10,8 @@ def index(request):
 
 def showRawData(request):
     #live_data = LiveData.objects.all().values()
-    live_data = LiveData.objects.latest('timestamp').values()
+    one_minute_ago = (datetime.datetime.now() - datetime.timedelta(minutes=15)).date()
+    live_data = LiveData.objects.all().exclude(timestamp__lte=one_minute_ago).values()
     keys = dict(list(live_data)[0]).keys()
 
     return render(request, 'livedata.html', {'params': live_data,'keys':keys})
