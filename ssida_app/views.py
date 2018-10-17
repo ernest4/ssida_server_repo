@@ -8,8 +8,10 @@ def index(request):
     return render(request, 'index.html')
 
 def showRawData(request):
-    live_data = LiveData.objects.all().values()
+    #live_data = LiveData.objects.all().values()
+    live_data = LiveData.objects.latest('timestamp').values()
     keys = dict(list(live_data)[0]).keys()
+
     return render(request, 'livedata.html', {'params': live_data,'keys':keys})
 
 @require_http_methods(['GET','POST'])
