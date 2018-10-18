@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h2>How SIDDA Data Processing Server Works?</h2>
+    </div>
+  </div>
+    <div class="row">
+        <div class="col-xs-12">
+          <h6>by <a href="/ourteam">Ernestas M.</a> - SIDDA Team.</h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+          <h6 style="color: grey;">Oct 18, 2018 | 1 min read</h6>
+        </div>
+    </div>
+  <div class="row">
+    <div class="col-xs-12">
+        <p>Users share their movement data from Flow [working title] app with this server. This can be seen on <a href="/livedata" target="_blank">Live Data</a></p>
+        <p>The server stores the data in an AWS RDS PostgreSQL database.</p>
+        <p>The information is then retreived by this server for display and/or running analytics to create a heat map. You can explore this data
+        in <a href="/storeddata" target="_blank">Stored Data</a></p>
+        <p>The heat map is then sent back to the users' devices so they can avail of <a href="/whatissidda" target="_blank">unbiased, scientific opinions of the quality of the environment they find themselves in</a>.</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

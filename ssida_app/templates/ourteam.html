@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h2>The minds behind SIDDA</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+        <img src="{% static 'banana1.jpg'%}" class="erb-image-wrapper img-circle" style="max-height: 50%; max-width: 50%;" alt="Harsh">
+    </div>
+    <div class="col-sm-6">
+        <h3>Harsh G.</h3>
+        <h4>Android App, SIDDA Server</h4>
+        <p>Enjoys programming and building things.</p>
+        <p>Dislikes long walks on the beach.</p>
+    </div>
+  </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+        <h3>Ernestas M.</h3>
+        <h4>SIDDA Server, Android App</h4>
+        <p>Enjoys programming and building things.</p>
+        <p>Dislikes suffering in the world.</p>
+    </div>
+    <div class="col-sm-6">
+        <img src="{% static 'banana2.jpg'%}" class="erb-image-wrapper img-circle" style="max-height: 50%; max-width: 50%;" alt="Ernest">
+    </div>
+  </div>
+
+    <div class="row">
+    <div class="col-sm-6">
+        <img src="{% static 'banana3.jpg'%}" class="erb-image-wrapper img-circle" style="max-height: 50%; max-width: 50%;" alt="Rory">
+    </div>
+    <div class="col-sm-6">
+        <h3>Rory B.</h3>
+        <h4>Data Analytics, Idea Guy</h4>
+        <p>Enjoys machine learning.</p>
+        <p>Dislikes Mr.Spandex.</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

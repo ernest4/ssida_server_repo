@@ -8,6 +8,15 @@ import datetime
 def index(request):
     return render(request, 'index.html')
 
+def howThisWorks(request):
+    return render(request, 'howthisworks.html')
+
+def whatIsSidda(request):
+    return render(request, 'whatissidda.html')
+
+def ourTeam(request):
+    return render(request, 'ourteam.html')
+
 def showRawData(request):
     # QuerySet.values() returns a list of dictionaries representing the records
     live_data = LiveData.objects.all().order_by('id').reverse()[:5].values()
