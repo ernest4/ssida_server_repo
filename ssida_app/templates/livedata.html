@@ -8,15 +8,29 @@
     <div class="col-xs-12">
       <H1>Raw Live Data</H1>
     </div>
+      <div class="col-xs-12">
+      <p>Please click on the table headers for more information.</p>
+    </div>
   </div>
       <div id="rawdata">
-        <div class="table-condensed">
-          <table class="table table-condensed">
+        <div class="table-responsive">
+          <table class="table">
               <thead>
                 <tr>
-                  {% for key in keys %}
+               <!--   {% for key in keys %}
                     <th>{{key}}</th>
-                  {% endfor %}
+                  {% endfor %} -->
+                    <th><button class="btn btn-success" data-toggle="popover" title="id" data-content="The key for each of the records" data-placement="bottom" data-trigger="focus">id</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="device_id" data-content="Identifies each unique install of the app" data-placement="bottom" data-trigger="focus">device_id</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="latitude" data-content="Location coordinate of the device" data-placement="bottom" data-trigger="focus">latitude</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="longitude" data-content="Location coordinate of the device" data-placement="bottom" data-trigger="focus">longitude</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="accelerometer_x" data-content="Acceleration of the device" data-placement="bottom" data-trigger="focus">accelerometer_x</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="accelerometer_y" data-content="Acceleration of the device" data-placement="bottom" data-trigger="focus">accelerometer_y</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="accelerometer_z" data-content="Acceleration of the device" data-placement="bottom" data-trigger="focus">accelerometer_z</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="gyroscope_x" data-content="Orientation of the device" data-placement="bottom" data-trigger="focus">gyroscope_x</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="gyroscope_y" data-content="Orientation of the device" data-placement="bottom" data-trigger="focus">gyroscope_y</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="gyroscope_z" data-content="Orientation of the device" data-placement="bottom" data-trigger="focus">gyroscope_z</button></th>
+                    <th><button class="btn btn-warning" data-toggle="popover" title="timestamp" data-content="Time the device sent the data to the server" data-placement="bottom" data-trigger="focus">timestamp</button></th>
                 </tr>
               </thead>
               <tbody>

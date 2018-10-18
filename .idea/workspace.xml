@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56ba4fe8-05a3-4c96-a622-6c092db5d65f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssida_app/static/livedata.js" beforeDir="false" afterPath="$PROJECT_DIR$/ssida_app/static/livedata.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssida_app/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/ssida_app/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ssida_app/templates/livedata.html" beforeDir="false" afterPath="$PROJECT_DIR$/ssida_app/templates/livedata.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ssida_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ssida_app/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,13 +48,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Procfile" value="4" />
-          <entry key="html" value="762" />
+          <entry key="html" value="1228" />
           <entry key="py" value="645" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="762" />
+          <entry key="HTML" value="1228" />
           <entry key="PLAIN_TEXT" value="4" />
           <entry key="Python" value="645" />
         </counts>
@@ -83,7 +85,7 @@
         <entry file="file://$PROJECT_DIR$/ssida_app/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
-              <caret line="12" column="76" lean-forward="true" selection-start-line="12" selection-start-column="76" selection-end-line="12" selection-end-column="76" />
+              <caret line="12" column="76" selection-start-line="12" selection-start-column="76" selection-end-line="12" selection-end-column="76" />
             </state>
           </provider>
         </entry>
@@ -91,8 +93,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ssida_app/templates/livedata.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+            <state relative-caret-position="340">
+              <caret line="32" column="54" selection-start-line="32" selection-start-column="54" selection-end-line="32" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -100,8 +102,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ssida_app/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-171">
-              <caret line="10" column="25" lean-forward="true" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+            <state relative-caret-position="136">
+              <caret line="29" column="61" lean-forward="true" selection-start-line="29" selection-start-column="61" selection-end-line="29" selection-end-column="61" />
             </state>
           </provider>
         </entry>
@@ -132,10 +134,10 @@
         <option value="$PROJECT_DIR$/Procfile" />
         <option value="$PROJECT_DIR$/base/urls.py" />
         <option value="$PROJECT_DIR$/ssida_app/templates/index.html" />
-        <option value="$PROJECT_DIR$/ssida_app/templates/base.html" />
         <option value="$PROJECT_DIR$/ssida_app/templates/rawdata.html" />
         <option value="$PROJECT_DIR$/ssida_app/templates/storeddata.html" />
         <option value="$PROJECT_DIR$/ssida_app/views.py" />
+        <option value="$PROJECT_DIR$/ssida_app/templates/base.html" />
         <option value="$PROJECT_DIR$/ssida_app/templates/livedata.html" />
       </list>
     </option>
@@ -353,24 +355,24 @@
     <entry file="file://$PROJECT_DIR$/ssida_app/static/livedata.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/ssida_app/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-171">
-          <caret line="10" column="25" lean-forward="true" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ssida_app/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="12" column="76" lean-forward="true" selection-start-line="12" selection-start-column="76" selection-end-line="12" selection-end-column="76" />
+          <caret line="12" column="76" selection-start-line="12" selection-start-column="76" selection-end-line="12" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ssida_app/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="29" column="61" lean-forward="true" selection-start-line="29" selection-start-column="61" selection-end-line="29" selection-end-column="61" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ssida_app/templates/livedata.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+        <state relative-caret-position="340">
+          <caret line="32" column="54" selection-start-line="32" selection-start-column="54" selection-end-line="32" selection-end-column="54" />
         </state>
       </provider>
     </entry>

@@ -1,3 +1,5 @@
-let testItem = document.getElementById("test");
+$(window).on('load', function () {
+    let testItem = document.getElementById("test");
 
-testItem.innerHTML = "JavaScript is loaded and live :) !";
+    testItem.innerHTML = "JavaScript is loaded and live :) !";
+});
