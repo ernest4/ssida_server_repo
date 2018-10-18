@@ -10,11 +10,10 @@ def index(request):
 
 def showRawData(request):
     #live_data = LiveData.objects.all().values()
-    one_minute_ago = (datetime.datetime.now() - datetime.timedelta(minutes=15)).date()
-    live_data = LiveData.objects.all().exclude(timestamp__lte=one_minute_ago).values()
-    keys = dict(list(live_data)[0]).keys()
+    live_data = LiveData.objects.all().reverse()[:5].values()
+    keys = live_data[0].keys()
 
-    return render(request, 'livedata.html', {'params': live_data,'keys':keys})
+    return render(request, 'livedata.html', {'recordDicts': live_data,'keys':keys})
 
 @require_http_methods(['GET','POST'])
 def rawData(request):

@@ -22,10 +22,10 @@
                 </tr>
               </thead>
               <tbody>
-                  {% for value in params %}
+                  {% for recordDict in recordDicts %}
                   <tr>
-                    {% for key,values in value.items %}
-                    <td>{{values}}</td>
+                    {% for key, value in recordDict.items %}
+                    <td>{{value}}</td>
                     {% endfor %}
                   </tr>
                   {% endfor %}
