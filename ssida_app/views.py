@@ -10,7 +10,7 @@ def index(request):
 
 def showRawData(request):
     # QuerySet.values() returns a list of dictionaries representing the records
-    live_data = LiveData.objects.all().order_by('-id').reverse()[:5].values()
+    live_data = LiveData.objects.all().order_by('id').reverse()[:5].order_by('-id').values()
     keys = live_data[0].keys()
 
     return render(request, 'livedata.html', {'recordDicts': live_data,'keys':keys})
