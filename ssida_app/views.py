@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from .models import Greeting, LiveData
 import datetime
@@ -14,6 +15,9 @@ def howThisWorks(request):
 def whatIsSidda(request):
     return render(request, 'whatissidda.html')
 
+def howAnalyticsWorks(request):
+    return render(request, 'howanalyticsworks.html')
+
 def ourTeam(request):
     return render(request, 'ourteam.html')
 
@@ -24,8 +28,23 @@ def showRawData(request):
 
     return render(request, 'livedata.html', {'recordDicts': live_data,'keys':keys})
 
+
+@require_http_methods(['GET'])
+def getRawData(request):
+    params = request.GET
+
+    if len(params)!=0:
+        rows = int(params['rows'])
+
+        #live_data = LiveData.objects.all().order_by('id').reverse()[:rows].values()
+        #live_data = LiveData.objects.raw('SELECT * FROM ssida_app_livedata')
+        live_data = {}
+
+        return JsonResponse(live_data)
+
+
 @require_http_methods(['GET','POST'])
-def rawData(request):
+def setRawData(request):
     params = request.GET
     live_data = LiveData()
     if len(params)!=0:
@@ -43,7 +62,7 @@ def rawData(request):
         live_data.save()
     return render(request, 'livedata.html', {'params': params, 'keys': params.keys()})
 
-def storedData(request):
+def showStoredData(request):
     return render(request, 'storeddata.html')
 
 

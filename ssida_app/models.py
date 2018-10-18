@@ -4,6 +4,7 @@ from django.db import models
 class Greeting(models.Model):
     when = models.DateTimeField('date created', auto_now_add=True)
 
+
 class LiveData(models.Model):
     device_id = models.CharField(max_length=50)
     latitude = models.DecimalField(max_digits=9,decimal_places=6)
