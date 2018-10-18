@@ -7,25 +7,21 @@ admin.autodiscover()
 
 import ssida_app.views
 
-# Examples:
-# url(r'^$', 'base.views.home', name='home'),
-# url(r'^blog/', include('blog.urls')),
-
 urlpatterns = [
     #pages
-    url(r'^$', ssida_app.views.index, name=''),
-    url('index', ssida_app.views.index, name='index'),
-    url('livedata',ssida_app.views.showRawData,name='showrawdata'),
-    url('storeddata', ssida_app.views.showStoredData, name='storeddata'),
-    url('howthisworks', ssida_app.views.howThisWorks, name='howthisworks'),
-    url('whatissidda', ssida_app.views.whatIsSidda, name='whatissidda'),
-    url('ourteam', ssida_app.views.ourTeam, name='ourTeam'),
-    url('howanalyticsworks', ssida_app.views.howAnalyticsWorks, name='howanalyticsworks'),
+    path('', ssida_app.views.index, name=''),
+    path('index', ssida_app.views.index, name='index'),
+    path('livedata',ssida_app.views.showRawData,name='showrawdata'),
+    path('storeddata', ssida_app.views.showStoredData, name='storeddata'),
+    path('howthisworks', ssida_app.views.howThisWorks, name='howthisworks'),
+    path('whatissidda', ssida_app.views.whatIsSidda, name='whatissidda'),
+    path('ourteam', ssida_app.views.ourTeam, name='ourTeam'),
+    path('howanalyticsworks', ssida_app.views.howAnalyticsWorks, name='howanalyticsworks'),
 
     #apis
-    url('rawdata', ssida_app.views.setRawData, name='rawdata'),
-    url('getrawdata', ssida_app.views.getRawData, name='getrawdata'),
+    path('rawdata', ssida_app.views.setRawData, name='rawdata'),
+    path('getrawdata', ssida_app.views.getRawData, name='getrawdata'),
 
-    url(r'^db', ssida_app.views.db, name='db'),
+    path('db', ssida_app.views.db, name='db'),
     path('admin/', admin.site.urls),
 ]

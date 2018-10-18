@@ -1,25 +1,40 @@
 $(window).on('load', function () {
 
-    function getLiveData(){
-        $.ajax({
-            url: "getrawdata",
-            type: "GET",
-            data: { rows : 5,
-                    //from_var : $('#location_from').val()
-                 },
+    setInterval( function() { 
+            getLiveData(8, function(data){
+    
+            let table = document.getElementById('responseTable');
+            let tableBody = document.getElementById('tbody_response');
 
-            success: function(response) {
-                console.log(response); //TESTING
+            //remove the old table body with old data
+            tableBody.parentNode.removeChild(tableBody);
 
-                //document.getElementById('test').innerHTML = response; //more efficient than using jQuery equivalent...
-                //document.getElementById('response').scrollIntoView();
-            },
+            //create a new table body
+            tableBody = document.createElement('tbody');
+            tableBody.setAttribute("id", "tbody_response");
+            table.appendChild(tableBody);
 
-            error: function(xhr, errmsg, err) {
-                console.log(xhr, errmsg, err);
-            }
-        });
-    }
+            //populate the new table body with fresh data
+            _.forEach(data, function(row){
+                //for each record from database, create a row
+                let tr = document.createElement("tr");
 
-    getLiveData();
+                //primary key is separate from the rest of the fields and will be set first
+                let td = document.createElement("td");
+                td.innerHTML = row.pk;
+                tr.appendChild(td)
+
+                //for each other field in a row, create a column of data
+                _.forEach(row.fields, function(column){
+                    let td = document.createElement("td");
+                    td.innerHTML = column;
+                    tr.appendChild(td)
+                });
+
+                //append the finished row
+                tableBody.appendChild(tr);
+            });
+
+        })
+    }, 1000); //every second
 });

@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from .models import Greeting, LiveData
+from django.core import serializers
 import datetime
 
 # Create your views here.
@@ -23,7 +24,7 @@ def ourTeam(request):
 
 def showRawData(request):
     # QuerySet.values() returns a list of dictionaries representing the records
-    live_data = LiveData.objects.all().order_by('id').reverse()[:5].values()
+    live_data = LiveData.objects.all().order_by('id').reverse()[:8].values()
     keys = live_data[0].keys()
 
     return render(request, 'livedata.html', {'recordDicts': live_data,'keys':keys})
@@ -36,11 +37,13 @@ def getRawData(request):
     if len(params)!=0:
         rows = int(params['rows'])
 
-        #live_data = LiveData.objects.all().order_by('id').reverse()[:rows].values()
-        #live_data = LiveData.objects.raw('SELECT * FROM ssida_app_livedata')
+        live_data = LiveData.objects.all().order_by('id').reverse()[:rows] #ORM query
+        #live_data = LiveData.objects.raw('SELECT * FROM ssida_app_livedata') #raw SQL query
+    else:
         live_data = {}
 
-        return JsonResponse(live_data)
+    live_data = serializers.serialize('json', live_data) #convert QuerySet to JSON
+    return HttpResponse(live_data, content_type='application/json')
 
 
 @require_http_methods(['GET','POST'])
