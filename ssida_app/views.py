@@ -46,6 +46,26 @@ def getRawData(request):
     return HttpResponse(live_data, content_type='application/json')
 
 
+@require_http_methods(['GET'])
+def getStoredData(request):
+    params = request.GET
+
+    # live_data = LiveData.objects.raw('SELECT * FROM ssida_app_livedata') #raw SQL query
+
+    if len(params) != 0:
+        rows = params['rows']
+        if rows == 'all':
+            live_data = LiveData.objects.all().order_by('id').reverse()
+        else:
+            rows = int(rows)
+            live_data = LiveData.objects.all().order_by('id').reverse()[:rows]  # ORM query
+    else:
+        live_data = {}
+
+    live_data = serializers.serialize('json', live_data)  # convert QuerySet to JSON
+    return HttpResponse(live_data, content_type='application/json')
+
+
 @require_http_methods(['GET','POST'])
 def setRawData(request):
     params = request.GET

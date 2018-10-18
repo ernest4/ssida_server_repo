@@ -9,13 +9,59 @@
       <H1>Stored Data</H1>
     </div>
   </div>
+    <div class="row">
+    <div class="col-xs-12">
+      <p>You may choose how much data you would like to see and generate various visualisations.</p>
+    </div>
+  </div>
+    <br/>
+    <div class="row">
+        <div class="col-xs-4">
+            <label for="rowsInput">Choose how many rows to see e.g. 8, 200 or all:</label>
+        </div>
+        <div class="col-xs-4">
+            <input type="text" class="form-control" id="rowsInput" placeholder="rows" value="8" required>
+        </div>
+        <div class="col-xs-4">
+            <button class="btn btn-success" id="submitQuery">Submit</button>
+        </div>
+  </div>
+    <br/>
+    <br/>
   <div class="row">
     <div class="col-xs-12">
-      <div id="storeddata"></div>
+      <div id="storeddata">
+        <div class="table-responsive">
+          <table class="table" id="responseTable">
+              <thead>
+                <tr>
+               <!--   {% for key in keys %}
+                    <th>{{key}}</th>
+                  {% endfor %} -->
+                    <th><button class="btn btn-success" data-toggle="popover" title="id" data-content="Primary key for each of the records" data-placement="bottom" data-trigger="focus">id</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="device_id" data-content="Identifies each unique install of the app. If the same device reinstalls the app, a new device id will be generated." data-placement="bottom" data-trigger="focus">device_id</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="latitude" data-content="Location coordinate of the device" data-placement="bottom" data-trigger="focus">latitude</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="longitude" data-content="Location coordinate of the device" data-placement="bottom" data-trigger="focus">longitude</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="accelerometer_x" data-content="Acceleration of the device" data-placement="bottom" data-trigger="focus">accelerometer_x</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="accelerometer_y" data-content="Acceleration of the device" data-placement="bottom" data-trigger="focus">accelerometer_y</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="accelerometer_z" data-content="Acceleration of the device" data-placement="bottom" data-trigger="focus">accelerometer_z</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="gyroscope_x" data-content="Orientation of the device" data-placement="bottom" data-trigger="focus">gyroscope_x</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="gyroscope_y" data-content="Orientation of the device" data-placement="bottom" data-trigger="focus">gyroscope_y</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="gyroscope_z" data-content="Orientation of the device" data-placement="bottom" data-trigger="focus">gyroscope_z</button></th>
+                    <th><button class="btn btn-warning" data-toggle="popover" title="timestamp" data-content="Time the device sent the data to the server" data-placement="bottom" data-trigger="focus">timestamp</button></th>
+                </tr>
+              </thead>
+              <tbody id="tbody_response"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- D3 for visualisations -->
 <script src="https://d3js.org/d3.v5.js"></script>
+<!-- JavaScripts -->
+<script src="{% static 'asyncServerDataLoad.js'%}"></script>
+<script src="{% static 'storeddata.js'%}"></script>
 {% endblock %}

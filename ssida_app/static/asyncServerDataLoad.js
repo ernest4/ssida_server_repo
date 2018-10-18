@@ -19,11 +19,11 @@ function getLiveData(rows = 8, callback){
 }
 
 //UNFINISHED!!!
-function getStoredData(callback){
+function getStoredData(rows = all, callback){
     $.ajax({
-        url: "...",
+        url: "getstoreddata",
         type: "GET",
-        data: { //rows : rows,
+        data: { rows : rows,
                 //from_var : $('#location_from').val()
              },
 
