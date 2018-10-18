@@ -10,7 +10,7 @@ def index(request):
 
 def showRawData(request):
     #live_data = LiveData.objects.all().values()
-    live_data = LiveData.objects.all().reverse()[:5].values()
+    live_data = LiveData.objects.all().order_by('id').reverse()[:5].values()
     keys = live_data[0].keys()
 
     return render(request, 'livedata.html', {'recordDicts': live_data,'keys':keys})
