@@ -7,7 +7,7 @@ function getLiveData(rows = 8, callback){
              },
 
         success: function(response) {
-            console.log(response); //TESTING
+            //console.log(response); //TESTING
 
             callback(response);
         },

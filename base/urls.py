@@ -22,6 +22,7 @@ urlpatterns = [
     path('rawdata', ssida_app.views.setRawData, name='rawdata'),
     path('getrawdata', ssida_app.views.getRawData, name='getrawdata'),
     path('getstoreddata', ssida_app.views.getStoredData, name='getstoreddata'),
+    path('downloadData', ssida_app.views.downloadData, name='downloaddata'),
 
     path('db', ssida_app.views.db, name='db'),
     path('admin/', admin.site.urls),

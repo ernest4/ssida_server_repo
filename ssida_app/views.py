@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from .models import Greeting, LiveData
 from django.core import serializers
-import datetime
+import csv
 
 # Create your views here.
 def index(request):
@@ -28,6 +28,9 @@ def showRawData(request):
     keys = live_data[0].keys()
 
     return render(request, 'livedata.html', {'recordDicts': live_data,'keys':keys})
+
+def showStoredData(request):
+    return render(request, 'storeddata.html')
 
 
 @require_http_methods(['GET'])
@@ -66,6 +69,23 @@ def getStoredData(request):
     return HttpResponse(live_data, content_type='application/json')
 
 
+def downloadData(request):
+    params = request.GET
+
+    if len(params) != 0:
+        rows = params['rows']
+
+        # Create the HttpResponse object with the appropriate CSV header.
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="data.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Rows', 'Foo', 'Bar', 'Baz'])
+        writer.writerow([rows, 'A', 'B', 'C', '"Testing"', "Here's a quote"])
+
+    return response
+
+
 @require_http_methods(['GET','POST'])
 def setRawData(request):
     params = request.GET
@@ -84,9 +104,6 @@ def setRawData(request):
         live_data.timestamp = params.get('timestamp')
         live_data.save()
     return render(request, 'livedata.html', {'params': params, 'keys': params.keys()})
-
-def showStoredData(request):
-    return render(request, 'storeddata.html')
 
 
 def db(request):

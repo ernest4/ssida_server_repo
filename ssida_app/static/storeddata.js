@@ -1,6 +1,11 @@
 $(window).on('load', function () {
 
-    $( "#submitQuery" ).on( "click", function() {
+    $( "#downloadDataButton" ).on( "click", function() {
+        window.location = "downloadData?rows=5";
+    });
+
+    //handling submit button
+    $( "#submitQueryButton" ).on( "click", function() {
         let rows = $('#rowsInput').val();
 
         getStoredData(rows, function(data){

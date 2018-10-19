@@ -23,7 +23,7 @@
             <input type="text" class="form-control" id="rowsInput" placeholder="rows" value="8" required>
         </div>
         <div class="col-xs-4">
-            <button class="btn btn-success" id="submitQuery">Submit</button>
+            <button class="btn btn-success" id="submitQueryButton">Submit</button>
         </div>
   </div>
     <br/>
@@ -31,8 +31,8 @@
   <div class="row">
     <div class="col-xs-12">
       <div id="storeddata">
-        <div class="table-responsive">
-          <table class="table" id="responseTable">
+        <div class="table-responsive" style="max-height: 50vh; overflow:auto;">
+          <table class="table table-bordered table-striped" id="responseTable">
               <thead>
                 <tr>
                <!--   {% for key in keys %}
@@ -51,12 +51,23 @@
                     <th><button class="btn btn-warning" data-toggle="popover" title="timestamp" data-content="Time the device sent the data to the server" data-placement="bottom" data-trigger="focus">timestamp</button></th>
                 </tr>
               </thead>
+              <!-- <tbody id="tbody_response" style="max-height: 75vh; overflow:auto;"></tbody> -->
               <tbody id="tbody_response"></tbody>
           </table>
         </div>
       </div>
     </div>
   </div>
+
+    <div class="row">
+        <div class="col-xs-9">
+            ...
+        </div>
+        <div class="col-xs-3">
+            <button class="btn btn-success" id="downloadDataButton">Download</button>
+            <button class="btn btn-info" data-toggle="popover" title="Download" data-content="Download the currently viewed data as a .csv file" data-placement="top" data-trigger="focus">?</button>
+        </div>
+    </div>
 </div>
 
 <!-- D3 for visualisations -->
