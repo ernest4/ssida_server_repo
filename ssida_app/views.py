@@ -5,6 +5,7 @@ from django.views.decorators.http import require_http_methods
 from .models import Greeting, LiveData
 from django.core import serializers
 import csv
+from django.utils.encoding import smart_str
 
 # Create your views here.
 def index(request):
@@ -74,14 +75,51 @@ def downloadData(request):
 
     if len(params) != 0:
         rows = params['rows']
+        if rows == 'all':
+            live_data = LiveData.objects.all().order_by('id').reverse()
+        else:
+            rows = int(rows)
+            live_data = LiveData.objects.all().order_by('id').reverse()[:rows]  # ORM query
 
         # Create the HttpResponse object with the appropriate CSV header.
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="data.csv"'
 
-        writer = csv.writer(response)
-        writer.writerow(['Rows', 'Foo', 'Bar', 'Baz'])
-        writer.writerow([rows, 'A', 'B', 'C', '"Testing"', "Here's a quote"])
+        #writer = csv.writer(response)
+        #writer.writerow(['Rows', 'Foo', 'Bar', 'Baz'])
+        #writer.writerow([rows, 'A', 'B', 'C', '"Testing"', "Here's a quote"])
+
+        writer = csv.writer(response, csv.excel)
+        response.write(u'\ufeff'.encode('utf8'))
+
+        # write the headers
+        writer.writerow([
+            smart_str(u"device_id"),
+            smart_str(u"latitude"),
+            smart_str(u"longitude"),
+            smart_str(u"accelerometer_x"),
+            smart_str(u"accelerometer_y"),
+            smart_str(u"accelerometer_z"),
+            smart_str(u"gyroscope_x"),
+            smart_str(u"gyroscope_y"),
+            smart_str(u"gyroscope_z"),
+            smart_str(u"timestamp"),
+        ])
+
+        # itterate over the data from database
+        for row in live_data:
+            writer.writerow([
+                smart_str(row.id),
+                smart_str(row.latitude),
+                smart_str(row.longitude),
+                smart_str(row.accelerometer_x),
+                smart_str(row.accelerometer_y),
+                smart_str(row.accelerometer_z),
+                smart_str(row.gyroscope_x),
+                smart_str(row.gyroscope_y),
+                smart_str(row.gyroscope_z),
+                smart_str(row.timestamp),
+            ])
 
     return response
 

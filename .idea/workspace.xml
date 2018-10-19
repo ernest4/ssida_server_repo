@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56ba4fe8-05a3-4c96-a622-6c092db5d65f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ssida_app/static/asyncServerDataLoad.js" beforeDir="false" afterPath="$PROJECT_DIR$/ssida_app/static/asyncServerDataLoad.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ssida_app/static/storeddata.js" beforeDir="false" afterPath="$PROJECT_DIR$/ssida_app/static/storeddata.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ssida_app/templates/livedata.html" beforeDir="false" afterPath="$PROJECT_DIR$/ssida_app/templates/livedata.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ssida_app/templates/storeddata.html" beforeDir="false" afterPath="$PROJECT_DIR$/ssida_app/templates/storeddata.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ssida_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ssida_app/views.py" afterDir="false" />
     </list>
@@ -33,7 +29,7 @@
           <entry key="js" value="2" />
           <entry key="json" value="1" />
           <entry key="png" value="1" />
-          <entry key="py" value="21" />
+          <entry key="py" value="22" />
           <entry key="pyi" value="1" />
         </counts>
       </usages-collector>
@@ -44,7 +40,7 @@
           <entry key="JSON" value="1" />
           <entry key="JavaScript" value="2" />
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Python" value="21" />
+          <entry key="Python" value="22" />
           <entry key="PythonStub" value="1" />
         </counts>
       </usages-collector>
@@ -52,15 +48,15 @@
         <counts>
           <entry key="Procfile" value="4" />
           <entry key="dummy" value="9" />
-          <entry key="html" value="3804" />
-          <entry key="py" value="1959" />
+          <entry key="html" value="3931" />
+          <entry key="py" value="2057" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="3804" />
+          <entry key="HTML" value="3931" />
           <entry key="PLAIN_TEXT" value="13" />
-          <entry key="Python" value="1959" />
+          <entry key="Python" value="2057" />
         </counts>
       </usages-collector>
     </session>
@@ -76,25 +72,34 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ssida_app/views.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ssida_app/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="79" column="69" selection-start-line="79" selection-start-column="69" selection-end-line="79" selection-end-column="69" />
-              <folding>
-                <marker date="1539948557233" expanded="true" signature="528:583" ph="..." />
-                <marker date="1539948557233" expanded="true" signature="604:649" ph="..." />
-                <marker date="1539948557233" expanded="true" signature="2294:2697" ph="..." />
-              </folding>
+            <state relative-caret-position="289">
+              <caret line="17" column="13" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ssida_app/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="111" column="30" selection-start-line="111" selection-start-column="30" selection-end-line="111" selection-end-column="30" />
+              <folding>
+                <marker date="1539950696600" expanded="true" signature="572:627" ph="..." />
+                <marker date="1539950696600" expanded="true" signature="648:693" ph="..." />
+                <marker date="1539950696600" expanded="true" signature="2571:4094" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ssida_app/templates/storeddata.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="62" column="30" lean-forward="true" selection-start-line="62" selection-start-column="30" selection-end-line="62" selection-end-column="30" />
+            <state relative-caret-position="121">
+              <caret line="19" column="54" selection-start-line="19" selection-start-column="54" selection-end-line="19" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -148,9 +153,9 @@
         <option value="$PROJECT_DIR$/ssida_app/models.py" />
         <option value="$PROJECT_DIR$/ssida_app/templates/base.html" />
         <option value="$PROJECT_DIR$/ssida_app/templates/livedata.html" />
-        <option value="$PROJECT_DIR$/ssida_app/templates/storeddata.html" />
         <option value="$PROJECT_DIR$/base/urls.py" />
         <option value="$PROJECT_DIR$/ssida_app/views.py" />
+        <option value="$PROJECT_DIR$/ssida_app/templates/storeddata.html" />
       </list>
     </option>
   </component>
@@ -237,7 +242,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17782739" />
@@ -379,31 +384,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ssida_app/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ssida_app/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/base/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="83" column="31" selection-start-line="83" selection-start-column="31" selection-end-line="83" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ssida_app/templates/storeddata.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="62" column="30" lean-forward="true" selection-start-line="62" selection-start-column="30" selection-end-line="62" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -414,15 +398,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/base/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="83" column="31" selection-start-line="83" selection-start-column="31" selection-end-line="83" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ssida_app/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ssida_app/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="79" column="69" selection-start-line="79" selection-start-column="69" selection-end-line="79" selection-end-column="69" />
+        <state relative-caret-position="306">
+          <caret line="111" column="30" selection-start-line="111" selection-start-column="30" selection-end-line="111" selection-end-column="30" />
           <folding>
-            <marker date="1539948557233" expanded="true" signature="528:583" ph="..." />
-            <marker date="1539948557233" expanded="true" signature="604:649" ph="..." />
-            <marker date="1539948557233" expanded="true" signature="2294:2697" ph="..." />
+            <marker date="1539950696600" expanded="true" signature="572:627" ph="..." />
+            <marker date="1539950696600" expanded="true" signature="648:693" ph="..." />
+            <marker date="1539950696600" expanded="true" signature="2571:4094" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ssida_app/templates/storeddata.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="19" column="54" selection-start-line="19" selection-start-column="54" selection-end-line="19" selection-end-column="54" />
         </state>
       </provider>
     </entry>

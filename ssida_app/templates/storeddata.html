@@ -16,14 +16,16 @@
   </div>
     <br/>
     <div class="row">
-        <div class="col-xs-4">
-            <label for="rowsInput">Choose how many rows to see e.g. 8, 200 or all:</label>
+        <div class="col-xs-5">
+            <label for="rowsInput">Choose number rows e.g. 8, 200 or all:</label>
         </div>
-        <div class="col-xs-4">
+        <div class="col-xs-3">
             <input type="text" class="form-control" id="rowsInput" placeholder="rows" value="8" required>
         </div>
         <div class="col-xs-4">
-            <button class="btn btn-success" id="submitQueryButton">Submit</button>
+            <button class="btn btn-success" id="submitQueryButton">Preview</button>
+            <button class="btn btn-success" id="downloadDataButton">Download</button>
+            <button class="btn btn-info" data-toggle="popover" title="Preview / Download" data-content="Preview in the browser, or download the currently selected number of rows of data as a .csv file" data-placement="top" data-trigger="focus">?</button>
         </div>
   </div>
     <br/>
@@ -58,16 +60,6 @@
       </div>
     </div>
   </div>
-
-    <div class="row">
-        <div class="col-xs-9">
-            ...
-        </div>
-        <div class="col-xs-3">
-            <button class="btn btn-success" id="downloadDataButton">Download</button>
-            <button class="btn btn-info" data-toggle="popover" title="Download" data-content="Download the currently viewed data as a .csv file" data-placement="top" data-trigger="focus">?</button>
-        </div>
-    </div>
 </div>
 
 <!-- D3 for visualisations -->

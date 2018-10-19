@@ -1,7 +1,9 @@
 $(window).on('load', function () {
 
     $( "#downloadDataButton" ).on( "click", function() {
-        window.location = "downloadData?rows=5";
+        let rows = $('#rowsInput').val();
+
+        window.location = "downloadData?"+"rows="+rows;
     });
 
     //handling submit button
