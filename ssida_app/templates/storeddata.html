@@ -20,7 +20,7 @@
             <label for="rowsInput">Choose number rows e.g. 8, 200 or all:</label>
         </div>
         <div class="col-xs-3">
-            <input type="text" class="form-control" id="rowsInput" placeholder="rows" value="8" required>
+            <input type="text" class="form-control" id="rowsInput" placeholder="rows" value="{{ last_run_value }}" required>
         </div>
         <div class="col-xs-4">
             <button class="btn btn-success" id="submitQueryButton">Preview</button>

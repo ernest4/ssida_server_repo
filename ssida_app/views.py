@@ -11,17 +11,22 @@ from django.utils.encoding import smart_str
 def index(request):
     return render(request, 'index.html')
 
+
 def howThisWorks(request):
     return render(request, 'howthisworks.html')
+
 
 def whatIsSidda(request):
     return render(request, 'whatissidda.html')
 
+
 def howAnalyticsWorks(request):
     return render(request, 'howanalyticsworks.html')
 
+
 def ourTeam(request):
     return render(request, 'ourteam.html')
+
 
 def showRawData(request):
     # QuerySet.values() returns a list of dictionaries representing the records
@@ -30,8 +35,19 @@ def showRawData(request):
 
     return render(request, 'livedata.html', {'recordDicts': live_data,'keys':keys})
 
+
 def showStoredData(request):
-    return render(request, 'storeddata.html')
+    # Get a session value, setting a default if it is not present (8)
+    last_run_value = request.session.get('lastRunValue', 8)
+
+    # Set session as modified to force data updates/cookie to be saved.
+    # (only truly necessary if updating internal data such as
+    # request.session['lastRunValue']['someOtherValue'] = ...)
+    request.session.modified = True
+
+    context = {'last_run_value': last_run_value}
+
+    return render(request, 'storeddata.html', context=context)
 
 
 @require_http_methods(['GET'])
@@ -58,6 +74,15 @@ def getStoredData(request):
 
     if len(params) != 0:
         rows = params['rows']
+
+        # Set a session value
+        request.session['lastRunValue'] = rows
+
+        # Set session as modified to force data updates/cookie to be saved.
+        # (only truly necessary if updating internal data such as
+        # request.session['lastRunValue']['someOtherValue'] = ...)
+        request.session.modified = True
+
         if rows == 'all':
             live_data = LiveData.objects.all().order_by('id').reverse()
         else:
@@ -75,6 +100,15 @@ def downloadData(request):
 
     if len(params) != 0:
         rows = params['rows']
+
+        # Set a session value
+        request.session['lastRunValue'] = rows
+
+        # Set session as modified to force data updates/cookie to be saved.
+        # (only truly necessary if updating internal data such as
+        # request.session['lastRunValue']['someOtherValue'] = ...)
+        request.session.modified = True
+
         if rows == 'all':
             live_data = LiveData.objects.all().order_by('id').reverse()
         else:
