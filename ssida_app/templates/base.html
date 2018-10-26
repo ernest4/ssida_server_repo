@@ -34,6 +34,21 @@
             <li><a href="https://github.com/ernest4/ssida_server_repo.git" target="_blank">GitHub</a></li>
           </ul>
       </li>
+      <li class="dropdown">
+            {% if user.is_authenticated %}
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"></span>{{ user.get_username }}<span class="caret"></span></a>
+             {% else %}
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"></span> Visitor <span class="caret"></span></a>
+             {% endif %}
+
+          <ul class="dropdown-menu" role="menu">
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+             {% else %}
+                <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+             {% endif %}
+          </ul>
+      </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li class="navbar-right">

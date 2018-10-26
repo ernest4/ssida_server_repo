@@ -6,6 +6,7 @@ from .models import Greeting, LiveData
 from django.core import serializers
 import csv
 from django.utils.encoding import smart_str
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -35,7 +36,7 @@ def showRawData(request):
 
     return render(request, 'livedata.html', {'recordDicts': live_data,'keys':keys})
 
-
+#@login_required
 def showStoredData(request):
     # Get a session value, setting a default if it is not present (8)
     last_run_value = request.session.get('lastRunValue', 8)

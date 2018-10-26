@@ -33,13 +33,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'ssida_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ssida_app'
 ]
 
 MIDDLEWARE = [
@@ -106,6 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -127,3 +130,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 django_heroku.settings(locals())
+
+
+
+#for testing, comment out when in production and using a real email server
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#for real email service provider option 2 (good for many, many users)
+#EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_HOST = 'smtp.sparkpostmail.com'
+#EMAIL_PORT = 587
+#EMAIL_HOST_USER = 'SMTP_Injection'
+#EMAIL_HOST_PASSWORD = '<sparkpost_api_key>'
+#EMAIL_USE_TLS = True

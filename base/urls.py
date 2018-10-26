@@ -26,4 +26,5 @@ urlpatterns = [
 
     path('db', ssida_app.views.db, name='db'),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls'))
 ]
