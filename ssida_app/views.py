@@ -7,6 +7,7 @@ from django.core import serializers
 import csv
 from django.utils.encoding import smart_str
 from django.contrib.auth.decorators import login_required
+import json
 
 # Create your views here.
 def index(request):
@@ -27,6 +28,27 @@ def howAnalyticsWorks(request):
 
 def ourTeam(request):
     return render(request, 'ourteam.html')
+
+
+def agreeToCookie(request):
+    params = request.GET
+    setCookie = params['allowCookie']
+
+    # getCookie, if it doesn't exist set it to False by default
+    allowCookie = request.session.get('allowCookie', False)
+
+    if setCookie == 'true':
+        # Set a session value
+        allowCookie = request.session['allowCookie'] = True
+
+    # Set session as modified to force data updates/cookie to be saved.
+    # (only truly necessary if updating internal data such as
+    # request.session['lastRunValue']['someOtherValue'] = ...)
+    request.session.modified = True
+
+    cookiePermision = {'allowCookie': allowCookie}
+
+    return JsonResponse(cookiePermision)
 
 
 def showRawData(request):
@@ -84,15 +106,24 @@ def getStoredData(request):
         # request.session['lastRunValue']['someOtherValue'] = ...)
         request.session.modified = True
 
+        allLiveData = LiveData.objects.all()
+        totalDataCount = allLiveData.count()
+
         if rows == 'all':
-            live_data = LiveData.objects.all().order_by('id').reverse()
+            selection = allLiveData.order_by('id').reverse()
         else:
             rows = int(rows)
-            live_data = LiveData.objects.all().order_by('id').reverse()[:rows]  # ORM query
-    else:
-        live_data = {}
+            selection = allLiveData.order_by('id').reverse()[:rows]  # ORM query
 
-    live_data = serializers.serialize('json', live_data)  # convert QuerySet to JSON
+    selectionCount = selection.count()
+
+    support_data = { 'totalDataCount': totalDataCount,
+                     'selectionCount': selectionCount,
+                     'selection': selection }
+
+    # convert QuerySet to JSON
+    live_data = serializers.serialize('json', selection)
+
     return HttpResponse(live_data, content_type='application/json')
 
 

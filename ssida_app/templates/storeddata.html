@@ -27,12 +27,29 @@
             <button class="btn btn-success" id="downloadDataButton">Download</button>
             <button class="btn btn-info" data-toggle="popover" title="Preview / Download" data-content="Preview in the browser, or download the currently selected number of rows of data as a .csv file" data-placement="top" data-trigger="focus">?</button>
         </div>
-  </div>
+      </div>
+    <div class="row">
+        <div class="col-xs-12">
+
+        </div>
+    </div>
     <br/>
     <br/>
   <div class="row">
     <div class="col-xs-12">
-      <div id="storeddata">
+      <div class="panel panel-default" id="storeddata">
+          <!-- Default panel contents -->
+          <div class="panel-heading">Preview</div>
+          <div class="panel-body">
+            <p>Below you may preview all of the data selected above.</p>
+
+              <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuenow="6" aria-valuemin="0" aria-valuemax="100" style="width: 6%;">
+                0%
+              </div>
+            </div>
+          </div>
+
         <div class="table-responsive" style="max-height: 50vh; overflow:auto;">
           <table class="table table-bordered table-striped" id="responseTable">
               <thead>

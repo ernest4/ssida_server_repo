@@ -19,6 +19,7 @@ urlpatterns = [
     path('howanalyticsworks', ssida_app.views.howAnalyticsWorks, name='howanalyticsworks'),
 
     #apis
+    path('agreetocookie', ssida_app.views.agreeToCookie, name='agreetocookie'),
     path('rawdata', ssida_app.views.setRawData, name='rawdata'),
     path('getrawdata', ssida_app.views.getRawData, name='getrawdata'),
     path('getstoreddata', ssida_app.views.getStoredData, name='getstoreddata'),

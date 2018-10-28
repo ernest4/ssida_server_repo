@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
+
+  {% load staticfiles %}
+
 <title>Python Getting Started on Heroku</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -58,6 +61,13 @@
   </div>
 </nav>
 
+<div class="container">
+  <div class="alert alert-warning alert-dismissible" role="alert" id="cookieAlert" style="display: none;">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" id="cookieClose">&times;</span></button>
+    This site uses <strong>cookies</strong> to provide and improve the services. By using this site, you consent to cookies.
+  </div>
+</div>
+
 {% block content %}{% endblock %}
 
 <script>
@@ -65,5 +75,6 @@
     $('[data-toggle="popover"]').popover();
    });
 </script>
+<script src="{% static 'closeCookie.js'%}"></script>
 </body>
 </html>

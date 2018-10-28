@@ -136,7 +136,7 @@ django_heroku.settings(locals())
 #for testing, comment out when in production and using a real email server
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-#for real email service provider option 2 (good for many, many users)
+#for real email service provider (good for many, many users)
 #EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 #EMAIL_HOST = 'smtp.sparkpostmail.com'
 #EMAIL_PORT = 587
