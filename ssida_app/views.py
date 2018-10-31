@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-from .models import Greeting, LiveData
+from .models import Greeting, LiveData, ScoreData
 from django.core import serializers
 import csv
 from django.utils.encoding import smart_str
@@ -208,6 +208,15 @@ def setRawData(request):
         live_data.timestamp = params.get('timestamp')
         live_data.save()
     return render(request, 'livedata.html', {'params': params, 'keys': params.keys()})
+
+
+def getMapData(request):
+    allMapData = ScoreData.objects.all()
+
+    # convert QuerySet to JSON
+    map_data = serializers.serialize('json', allMapData)
+
+    return HttpResponse(map_data, content_type='application/json')
 
 
 def db(request):

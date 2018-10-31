@@ -26,3 +26,15 @@ class LiveData(models.Model):
             models.Index(fields=['device_id']),
             models.Index(fields=['latitude','longitude'])
         ]
+
+
+class ScoreData(models.Model):
+    latitude = models.DecimalField(max_digits=9,decimal_places=6)
+    longitude = models.DecimalField(max_digits=9,decimal_places=6)
+    score = models.DecimalField(max_digits=9,decimal_places=6)
+
+    class Meta():
+        verbose_name_plural = "Computed GEO Score Data"
+        indexes = [
+            models.Index(fields=['latitude','longitude'])
+        ]
