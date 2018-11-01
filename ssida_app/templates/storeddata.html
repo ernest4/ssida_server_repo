@@ -26,13 +26,13 @@
               <div id="home" class="tab-pane fade in active">
                   <br/>
                 <div class="row">
-                    <div class="col-xs-5">
+                    <div class="col-xs-6 col-sm-5">
                         <label for="rowsInput">Choose number rows e.g. 8, 200 or all:</label>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-6 col-sm-3">
                         <input type="text" class="form-control" id="rowsInput" placeholder="rows" value="{{ last_run_value }}" required>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 col-sm-4">
                         <button class="btn btn-success" id="submitQueryButton">Preview</button>
                         <button class="btn btn-success" id="downloadDataButton">Download</button>
                         <button class="btn btn-info" data-toggle="popover" title="Preview / Download" data-content="Preview in the browser, or download the currently selected number of rows of data as a .csv file" data-placement="top" data-trigger="focus">?</button>
@@ -43,37 +43,79 @@
                   <br/>
                 <div class="row">
                     <div class="col-xs-12">
-                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#queryControl">Advanced Query</button>
+                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#queryControl">Advanced Query Help</button>
+                        <br/>
+                        <div id="queryControl" class="collapse">
+                            <br/>
+                            <p>
+                            All the input fields are filters and are optional except the row number. The fields may be mixed and matched in any way,
+                                for e.g. when oldest date and most recent date are given, the rows returned will be within that date range. </p>
+                            <p>
+                                The date time fitlers are particularly flexible, you may copy paste directly from some data already previewed, or choose any date time
+                            string of wide range of precision from days (2018-10-06) to milliseconds (2018-11-01 17:02:12.316) or (2018-11-01T17:02:12.316Z).
+                            </p>
+                        </div>
 
+                        <br/>
                         <div class="row">
+                            <div class="col-xs-6">
+                                <label for="dateTimeInputOldest">Pick the oldest date for the data e.g. <br/> <span style="color: blue;">2018-10-06</span>, <span style="color: green;">2018-11-1 17:02:13.42</span> or <span style="color: red;">none</span>:</label>
+                            </div>
                             <div class="col-xs-5">
-                                <label for="rowsInput">Choose number rows e.g. 8, 200 or all:</label>
+                                <input type="text" class="form-control" id="dateTimeInputOldest" placeholder="none" value="{{ last_run_date_time_old }}" required>
                             </div>
-                            <div class="col-xs-3">
-                                <input type="text" class="form-control" id="rowsInputAdvanced" placeholder="rows" value="{{ last_run_value }}" required>
-                            </div>
-                            <div class="col-xs-4">
+                            <div class="col-xs-1">
                                 <!-- -->
                             </div>
                           </div>
 
                         <div class="row">
+                            <div class="col-xs-6">
+                                <label for="dateTimeInputNewest">Pick the most recent date for the data e.g. <br/> <span style="color: blue;">2018-10-06</span>, <span style="color: green;">2018-11-1 17:02:13.42</span> or <span style="color: red;">none</span>:</label>
+                            </div>
                             <div class="col-xs-5">
-                                <label for="deviceIdInput">Choose device_id e.g. c880c20, 4ee6c85 or all:</label>
+                                <input type="text" class="form-control" id="dateTimeInputNewest" placeholder="none" value="{{ last_run_date_time_new }}" required>
                             </div>
-                            <div class="col-xs-3">
-                                <input type="text" class="form-control" id="deviceIdInput" placeholder="rows" value="{{ last_run_device_id }}" required>
-                            </div>
-                            <div class="col-xs-4">
-                                <button class="btn btn-success" id="submitQueryButtonAdvanced">Preview</button>
-                                <button class="btn btn-success" id="downloadDataButtonAdvanced">Download</button>
-                                <button class="btn btn-info" data-toggle="popover" title="Preview / Download" data-content="Preview in the browser, or download the currently selected number of rows of data as a .csv file" data-placement="top" data-trigger="focus">?</button>
+                            <div class="col-xs-1">
+                                <!-- -->
                             </div>
                           </div>
 
-                          <div id="queryControl" class="collapse">
-                            Coming soon...
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <label for="rowsInput">Choose number rows e.g. <br/> 8, 200 or all:</label>
+                            </div>
+                            <div class="col-xs-5">
+                                <input type="text" class="form-control" id="rowsInputAdvanced" placeholder="rows" value="{{ last_run_value }}" required>
+                            </div>
+                            <div class="col-xs-1">
+                                <!-- -->
+                            </div>
                           </div>
+
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <label for="deviceIdInput">Choose device_id e.g. <br/> c880c20, 4ee6c85 or all:</label>
+                            </div>
+                            <div class="col-xs-5">
+                                <input type="text" class="form-control" id="deviceIdInput" placeholder="rows" value="{{ last_run_device_id }}" required>
+                            </div>
+                            <div class="col-xs-1">
+                                <!-- -->
+                            </div>
+                          </div>
+
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3 col-sm-6">
+                                <!-- -->
+                            </div>
+                            <div class="col-xs-9 col-sm-6">
+                                <button class="btn btn-success" id="submitQueryButtonAdvanced">Preview</button>
+                                <button class="btn btn-success" id="downloadDataButtonAdvanced">Download</button>
+                                <button class="btn btn-info" data-toggle="popover" title="Preview / Download" data-content="Preview in the browser, or download the currently selected rows of data as a .csv file" data-placement="top" data-trigger="focus">?</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
               </div>
@@ -111,17 +153,17 @@
                <!--   {% for key in keys %}
                     <th>{{key}}</th>
                   {% endfor %} -->
-                    <th><button class="btn btn-success" data-toggle="popover" title="id" data-content="Primary key for each of the records" data-placement="bottom" data-trigger="focus">id</button></th>
-                    <th><button class="btn btn-info" data-toggle="popover" title="device_id" data-content="Identifies each unique install of the app. If the same device reinstalls the app, a new device id will be generated." data-placement="bottom" data-trigger="focus">device_id</button></th>
-                    <th><button class="btn btn-info" data-toggle="popover" title="latitude" data-content="Location coordinate of the device" data-placement="bottom" data-trigger="focus">latitude</button></th>
-                    <th><button class="btn btn-info" data-toggle="popover" title="longitude" data-content="Location coordinate of the device" data-placement="bottom" data-trigger="focus">longitude</button></th>
-                    <th><button class="btn btn-info" data-toggle="popover" title="accelerometer_x" data-content="Acceleration of the device" data-placement="bottom" data-trigger="focus">accelerometer_x</button></th>
-                    <th><button class="btn btn-info" data-toggle="popover" title="accelerometer_y" data-content="Acceleration of the device" data-placement="bottom" data-trigger="focus">accelerometer_y</button></th>
-                    <th><button class="btn btn-info" data-toggle="popover" title="accelerometer_z" data-content="Acceleration of the device" data-placement="bottom" data-trigger="focus">accelerometer_z</button></th>
-                    <th><button class="btn btn-info" data-toggle="popover" title="gyroscope_x" data-content="Orientation of the device" data-placement="bottom" data-trigger="focus">gyroscope_x</button></th>
-                    <th><button class="btn btn-info" data-toggle="popover" title="gyroscope_y" data-content="Orientation of the device" data-placement="bottom" data-trigger="focus">gyroscope_y</button></th>
-                    <th><button class="btn btn-info" data-toggle="popover" title="gyroscope_z" data-content="Orientation of the device" data-placement="bottom" data-trigger="focus">gyroscope_z</button></th>
-                    <th><button class="btn btn-warning" data-toggle="popover" title="timestamp" data-content="Time the device sent the data to the server" data-placement="bottom" data-trigger="focus">timestamp</button></th>
+                    <th><button class="btn btn-success" data-toggle="popover" title="id" data-content="Primary key for each of the records" data-placement="top" data-trigger="focus">id</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="device_id" data-content="Identifies each unique install of the app. If the same device reinstalls the app, a new device id will be generated." data-placement="top" data-trigger="focus">device_id</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="latitude" data-content="Location coordinate of the device" data-placement="top" data-trigger="focus">latitude</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="longitude" data-content="Location coordinate of the device" data-placement="top" data-trigger="focus">longitude</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="accelerometer_x" data-content="Acceleration of the device" data-placement="top" data-trigger="focus">accelerometer_x</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="accelerometer_y" data-content="Acceleration of the device" data-placement="top" data-trigger="focus">accelerometer_y</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="accelerometer_z" data-content="Acceleration of the device" data-placement="top" data-trigger="focus">accelerometer_z</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="gyroscope_x" data-content="Orientation of the device" data-placement="top" data-trigger="focus">gyroscope_x</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="gyroscope_y" data-content="Orientation of the device" data-placement="top" data-trigger="focus">gyroscope_y</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="gyroscope_z" data-content="Orientation of the device" data-placement="top" data-trigger="focus">gyroscope_z</button></th>
+                    <th><button class="btn btn-warning" data-toggle="popover" title="timestamp" data-content="Time the device sent the data to the server. You may copy and paste this directly into the advanced query field." data-placement="top" data-trigger="focus">timestamp</button></th>
                 </tr>
               </thead>
               <!-- <tbody id="tbody_response" style="max-height: 75vh; overflow:auto;"></tbody> -->

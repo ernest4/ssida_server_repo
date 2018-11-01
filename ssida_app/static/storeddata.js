@@ -3,14 +3,21 @@ $(window).on('load', function () {
     $( "#downloadDataButton" ).on( "click", function() {
         let rows = $('#rowsInput').val();
 
-        window.location = "downloadData?"+"rows="+rows+"&"+"device_ids="+"all";
+        window.location = "downloadData?"+
+                          "rows="+rows+
+                          "&"+
+                          "device_ids="+"all"+
+                          "&"+
+                          "date_time_old="+"none"+
+                          "&"+
+                          "date_time_new="+"none";
     });
 
     //handling submit button
     $( "#submitQueryButton" ).on( "click", function() {
         let rows = $('#rowsInput').val();
 
-        getStoredData(rows, 'all', function(data){
+        getStoredData(rows, 'all', 'none', 'none', function(data){
 
             let table = document.getElementById('responseTable');
             let tableBody = document.getElementById('tbody_response');
@@ -51,16 +58,27 @@ $(window).on('load', function () {
     $( "#downloadDataButtonAdvanced" ).on( "click", function() {
         let rows = $('#rowsInputAdvanced').val();
         let device_ids = $('#deviceIdInput').val();
+        let date_time_old = $('#dateTimeInputOldest').val();
+        let date_time_new = $('#dateTimeInputNewest').val();
 
-        window.location = "downloadData?"+"rows="+rows+"&"+"device_ids="+device_ids;
+        window.location = "downloadData?"+
+                          "rows="+rows+
+                          "&"+
+                          "device_ids="+device_ids+
+                          "&"+
+                          "date_time_old="+date_time_old+
+                          "&"+
+                          "date_time_new="+date_time_new;
     });
 
     //handling submit button
     $( "#submitQueryButtonAdvanced" ).on( "click", function() {
         let rows = $('#rowsInputAdvanced').val();
         let device_ids = $('#deviceIdInput').val();
+        let date_time_old = $('#dateTimeInputOldest').val();
+        let date_time_new = $('#dateTimeInputNewest').val();
 
-        getStoredData(rows, device_ids, function(data){
+        getStoredData(rows, device_ids, date_time_old, date_time_new, function(data){
 
             let table = document.getElementById('responseTable');
             let tableBody = document.getElementById('tbody_response');

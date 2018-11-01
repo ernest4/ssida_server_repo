@@ -63,6 +63,8 @@ def showStoredData(request):
     # Get a session value, setting a default if it is not present (8)
     last_run_value = request.session.get('lastRunRowCount', 8)
     last_run_device_id = request.session.get('lastRunDeviceID', 'all')
+    last_run_date_time_old = request.session.get('lastRunDateTimeOld', 'none')
+    last_run_date_time_new = request.session.get('lastRunDateTimeNew', 'none')
 
     # Set session as modified to force data updates/cookie to be saved.
     # (only truly necessary if updating internal data such as
@@ -70,7 +72,9 @@ def showStoredData(request):
     request.session.modified = True
 
     context = {'last_run_value': last_run_value,
-               'last_run_device_id': last_run_device_id}
+               'last_run_device_id': last_run_device_id,
+               'last_run_date_time_old': last_run_date_time_old,
+               'last_run_date_time_new': last_run_date_time_new}
 
     return render(request, 'storeddata.html', context=context)
 
@@ -91,30 +95,36 @@ def getRawData(request):
     return HttpResponse(live_data, content_type='application/json')
 
 
-def getDataFromDB(rows, deviceids):
+def getDataFromDB(rows, deviceids, datetimeold, datetimenew):
     # live_data = LiveData.objects.raw('SELECT * FROM ssida_app_livedata') #raw SQL query
 
-    allLiveData = LiveData.objects.all()
-    totalDataCount = allLiveData.count()
+    allStoredData = LiveData.objects.all()
+    totalDataCount = allStoredData.count()
 
-    if rows == 'all':
-        if deviceids == 'all':
-            selection = allLiveData.order_by('id').reverse()
-        else:
-            deviceids = "com.google.android.gms.iid.InstanceID@" + deviceids
-            selection = allLiveData.order_by('id').reverse().filter(device_id=deviceids)
-    else:
+    allStoredDataRevOrd = allStoredData.order_by('id').reverse()
+
+    #filter by device_id
+    if deviceids != 'all':
+        deviceidsFullName = "com.google.android.gms.iid.InstanceID@" + deviceids
+        allStoredDataRevOrd = allStoredDataRevOrd.filter(device_id=deviceidsFullName)
+
+    #filter by selecting rows newer than chosend date
+    if datetimeold != 'none':
+        allStoredDataRevOrd = allStoredDataRevOrd.filter(timestamp__gt=datetimeold)
+
+    #filter by selecting rows older than chosen date
+    if datetimenew != 'none':
+        allStoredDataRevOrd = allStoredDataRevOrd.filter(timestamp__lt=datetimenew)
+
+    #filter by number of rows desired
+    if rows != 'all':
         rows = int(rows)
-        if deviceids == 'all':
-            selection = allLiveData.order_by('id').reverse()[:rows]  # ORM query
-        else:
-            deviceids = "com.google.android.gms.iid.InstanceID@" + deviceids
-            selection = allLiveData.order_by('id').reverse().filter(device_id=deviceids)[:rows]
+        allStoredDataRevOrd = allStoredDataRevOrd[:rows]
 
         # allLiveData.objects.filter(year_published__gt=1990) \
         #            .exclude(author='Richard Dawkins') \
         #                .order_by('author', '- year_published')
-    return selection, totalDataCount
+    return allStoredDataRevOrd, totalDataCount
 
 
 @require_http_methods(['GET'])
@@ -123,17 +133,24 @@ def getStoredData(request):
 
     rows = params['rows']
     deviceids = params['device_ids']
+    datetimeold = params['date_time_old']
+    datetimenew = params['date_time_new']
 
     # Set a session value
     request.session['lastRunRowCount'] = rows
     request.session['lastRunDeviceID'] = deviceids
+    request.session['lastRunDateTimeOld'] = datetimeold
+    request.session['lastRunDateTimeNew'] = datetimenew
 
     # Set session as modified to force data updates/cookie to be saved.
     # (only truly necessary if updating internal data such as
     # request.session['lastRunValue']['someOtherValue'] = ...)
     request.session.modified = True
 
-    selection, totalDataCount = getDataFromDB(rows=rows, deviceids=deviceids)
+    selection, totalDataCount = getDataFromDB(rows=rows,
+                                              deviceids=deviceids,
+                                              datetimeold=datetimeold,
+                                              datetimenew=datetimenew)
 
     selectionCount = selection.count()
 
@@ -152,17 +169,24 @@ def downloadData(request):
 
     rows = params['rows']
     deviceids = params['device_ids']
+    datetimeold = params['date_time_old']
+    datetimenew = params['date_time_new']
 
     # Set a session value
     request.session['lastRunRowCount'] = rows
     request.session['lastRunDeviceID'] = deviceids
+    request.session['lastRunDateTimeOld'] = datetimeold
+    request.session['lastRunDateTimeNew'] = datetimenew
 
     # Set session as modified to force data updates/cookie to be saved.
     # (only truly necessary if updating internal data such as
     # request.session['lastRunValue']['someOtherValue'] = ...)
     request.session.modified = True
 
-    live_data, live_data_count = getDataFromDB(rows=rows, deviceids=deviceids)
+    live_data, live_data_count = getDataFromDB(rows=rows,
+                                               deviceids=deviceids,
+                                               datetimeold=datetimeold,
+                                               datetimenew=datetimenew)
 
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')

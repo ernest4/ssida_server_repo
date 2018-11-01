@@ -19,12 +19,14 @@ function getLiveData(rows = 8, callback){
 }
 
 //UNFINISHED!!!
-function getStoredData(rows = 'all', device_ids = 'all', callback){
+function getStoredData(rows = 'all', device_ids = 'all', date_time_old = 'none', date_time_new = 'none', callback){
     $.ajax({
         url: "getstoreddata",
         type: "GET",
         data: { rows : rows,
                 device_ids: device_ids,
+                date_time_old: date_time_old,
+                date_time_new: date_time_new,
                 //from_var : $('#location_from').val()
              },
 
