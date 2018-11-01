@@ -44,6 +44,33 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#queryControl">Advanced Query</button>
+
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <label for="rowsInput">Choose number rows e.g. 8, 200 or all:</label>
+                            </div>
+                            <div class="col-xs-3">
+                                <input type="text" class="form-control" id="rowsInputAdvanced" placeholder="rows" value="{{ last_run_value }}" required>
+                            </div>
+                            <div class="col-xs-4">
+                                <!-- -->
+                            </div>
+                          </div>
+
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <label for="deviceIdInput">Choose device_id e.g. c880c20, 4ee6c85 or all:</label>
+                            </div>
+                            <div class="col-xs-3">
+                                <input type="text" class="form-control" id="deviceIdInput" placeholder="rows" value="{{ last_run_device_id }}" required>
+                            </div>
+                            <div class="col-xs-4">
+                                <button class="btn btn-success" id="submitQueryButtonAdvanced">Preview</button>
+                                <button class="btn btn-success" id="downloadDataButtonAdvanced">Download</button>
+                                <button class="btn btn-info" data-toggle="popover" title="Preview / Download" data-content="Preview in the browser, or download the currently selected number of rows of data as a .csv file" data-placement="top" data-trigger="focus">?</button>
+                            </div>
+                          </div>
+
                           <div id="queryControl" class="collapse">
                             Coming soon...
                           </div>

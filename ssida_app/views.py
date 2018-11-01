@@ -61,14 +61,16 @@ def showRawData(request):
 #@login_required
 def showStoredData(request):
     # Get a session value, setting a default if it is not present (8)
-    last_run_value = request.session.get('lastRunValue', 8)
+    last_run_value = request.session.get('lastRunRowCount', 8)
+    last_run_device_id = request.session.get('lastRunDeviceID', 'all')
 
     # Set session as modified to force data updates/cookie to be saved.
     # (only truly necessary if updating internal data such as
     # request.session['lastRunValue']['someOtherValue'] = ...)
     request.session.modified = True
 
-    context = {'last_run_value': last_run_value}
+    context = {'last_run_value': last_run_value,
+               'last_run_device_id': last_run_device_id}
 
     return render(request, 'storeddata.html', context=context)
 
@@ -97,9 +99,11 @@ def getStoredData(request):
 
     if len(params) != 0:
         rows = params['rows']
+        deviceids = params['device_ids']
 
         # Set a session value
-        request.session['lastRunValue'] = rows
+        request.session['lastRunRowCount'] = rows
+        request.session['lastRunDeviceID'] = deviceids
 
         # Set session as modified to force data updates/cookie to be saved.
         # (only truly necessary if updating internal data such as
@@ -110,10 +114,22 @@ def getStoredData(request):
         totalDataCount = allLiveData.count()
 
         if rows == 'all':
-            selection = allLiveData.order_by('id').reverse()
+            if deviceids == 'all':
+                selection = allLiveData.order_by('id').reverse()
+            else:
+                deviceids = "com.google.android.gms.iid.InstanceID@" + deviceids
+                selection = allLiveData.order_by('id').reverse().filter(device_id=deviceids)
         else:
             rows = int(rows)
-            selection = allLiveData.order_by('id').reverse()[:rows]  # ORM query
+            if deviceids == 'all':
+                selection = allLiveData.order_by('id').reverse()[:rows]  # ORM query
+            else:
+                deviceids = "com.google.android.gms.iid.InstanceID@" + deviceids
+                selection = allLiveData.order_by('id').reverse().filter(device_id=deviceids)[:rows]
+
+            #allLiveData.objects.filter(year_published__gt=1990) \
+            #            .exclude(author='Richard Dawkins') \
+            #                .order_by('author', '- year_published')
 
     selectionCount = selection.count()
 
@@ -132,9 +148,11 @@ def downloadData(request):
 
     if len(params) != 0:
         rows = params['rows']
+        deviceids = params['device_ids']
 
         # Set a session value
-        request.session['lastRunValue'] = rows
+        request.session['lastRunRowCount'] = rows
+        request.session['lastRunDeviceID'] = deviceids
 
         # Set session as modified to force data updates/cookie to be saved.
         # (only truly necessary if updating internal data such as
