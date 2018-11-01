@@ -3,7 +3,7 @@ $(window).on('load', function () {
     $( "#downloadDataButton" ).on( "click", function() {
         let rows = $('#rowsInput').val();
 
-        window.location = "downloadData?"+"rows="+rows+"&"+"deviceids="+"all";
+        window.location = "downloadData?"+"rows="+rows+"&"+"device_ids="+"all";
     });
 
     //handling submit button
@@ -52,7 +52,7 @@ $(window).on('load', function () {
         let rows = $('#rowsInputAdvanced').val();
         let device_ids = $('#deviceIdInput').val();
 
-        window.location = "downloadData?"+"rows="+rows+"&"+"deviceids="+device_ids;
+        window.location = "downloadData?"+"rows="+rows+"&"+"device_ids="+device_ids;
     });
 
     //handling submit button

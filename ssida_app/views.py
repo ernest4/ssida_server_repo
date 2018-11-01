@@ -91,45 +91,49 @@ def getRawData(request):
     return HttpResponse(live_data, content_type='application/json')
 
 
+def getDataFromDB(rows, deviceids):
+    # live_data = LiveData.objects.raw('SELECT * FROM ssida_app_livedata') #raw SQL query
+
+    allLiveData = LiveData.objects.all()
+    totalDataCount = allLiveData.count()
+
+    if rows == 'all':
+        if deviceids == 'all':
+            selection = allLiveData.order_by('id').reverse()
+        else:
+            deviceids = "com.google.android.gms.iid.InstanceID@" + deviceids
+            selection = allLiveData.order_by('id').reverse().filter(device_id=deviceids)
+    else:
+        rows = int(rows)
+        if deviceids == 'all':
+            selection = allLiveData.order_by('id').reverse()[:rows]  # ORM query
+        else:
+            deviceids = "com.google.android.gms.iid.InstanceID@" + deviceids
+            selection = allLiveData.order_by('id').reverse().filter(device_id=deviceids)[:rows]
+
+        # allLiveData.objects.filter(year_published__gt=1990) \
+        #            .exclude(author='Richard Dawkins') \
+        #                .order_by('author', '- year_published')
+    return selection, totalDataCount
+
+
 @require_http_methods(['GET'])
 def getStoredData(request):
     params = request.GET
 
-    # live_data = LiveData.objects.raw('SELECT * FROM ssida_app_livedata') #raw SQL query
+    rows = params['rows']
+    deviceids = params['device_ids']
 
-    if len(params) != 0:
-        rows = params['rows']
-        deviceids = params['device_ids']
+    # Set a session value
+    request.session['lastRunRowCount'] = rows
+    request.session['lastRunDeviceID'] = deviceids
 
-        # Set a session value
-        request.session['lastRunRowCount'] = rows
-        request.session['lastRunDeviceID'] = deviceids
+    # Set session as modified to force data updates/cookie to be saved.
+    # (only truly necessary if updating internal data such as
+    # request.session['lastRunValue']['someOtherValue'] = ...)
+    request.session.modified = True
 
-        # Set session as modified to force data updates/cookie to be saved.
-        # (only truly necessary if updating internal data such as
-        # request.session['lastRunValue']['someOtherValue'] = ...)
-        request.session.modified = True
-
-        allLiveData = LiveData.objects.all()
-        totalDataCount = allLiveData.count()
-
-        if rows == 'all':
-            if deviceids == 'all':
-                selection = allLiveData.order_by('id').reverse()
-            else:
-                deviceids = "com.google.android.gms.iid.InstanceID@" + deviceids
-                selection = allLiveData.order_by('id').reverse().filter(device_id=deviceids)
-        else:
-            rows = int(rows)
-            if deviceids == 'all':
-                selection = allLiveData.order_by('id').reverse()[:rows]  # ORM query
-            else:
-                deviceids = "com.google.android.gms.iid.InstanceID@" + deviceids
-                selection = allLiveData.order_by('id').reverse().filter(device_id=deviceids)[:rows]
-
-            #allLiveData.objects.filter(year_published__gt=1990) \
-            #            .exclude(author='Richard Dawkins') \
-            #                .order_by('author', '- year_published')
+    selection, totalDataCount = getDataFromDB(rows=rows, deviceids=deviceids)
 
     selectionCount = selection.count()
 
@@ -146,64 +150,59 @@ def getStoredData(request):
 def downloadData(request):
     params = request.GET
 
-    if len(params) != 0:
-        rows = params['rows']
-        deviceids = params['device_ids']
+    rows = params['rows']
+    deviceids = params['device_ids']
 
-        # Set a session value
-        request.session['lastRunRowCount'] = rows
-        request.session['lastRunDeviceID'] = deviceids
+    # Set a session value
+    request.session['lastRunRowCount'] = rows
+    request.session['lastRunDeviceID'] = deviceids
 
-        # Set session as modified to force data updates/cookie to be saved.
-        # (only truly necessary if updating internal data such as
-        # request.session['lastRunValue']['someOtherValue'] = ...)
-        request.session.modified = True
+    # Set session as modified to force data updates/cookie to be saved.
+    # (only truly necessary if updating internal data such as
+    # request.session['lastRunValue']['someOtherValue'] = ...)
+    request.session.modified = True
 
-        if rows == 'all':
-            live_data = LiveData.objects.all().order_by('id').reverse()
-        else:
-            rows = int(rows)
-            live_data = LiveData.objects.all().order_by('id').reverse()[:rows]  # ORM query
+    live_data, live_data_count = getDataFromDB(rows=rows, deviceids=deviceids)
 
-        # Create the HttpResponse object with the appropriate CSV header.
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="data.csv"'
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="data.csv"'
 
-        #writer = csv.writer(response)
-        #writer.writerow(['Rows', 'Foo', 'Bar', 'Baz'])
-        #writer.writerow([rows, 'A', 'B', 'C', '"Testing"', "Here's a quote"])
+    #writer = csv.writer(response)
+    #writer.writerow(['Rows', 'Foo', 'Bar', 'Baz'])
+    #writer.writerow([rows, 'A', 'B', 'C', '"Testing"', "Here's a quote"])
 
-        writer = csv.writer(response, csv.excel)
-        response.write(u'\ufeff'.encode('utf8'))
+    writer = csv.writer(response, csv.excel)
+    response.write(u'\ufeff'.encode('utf8'))
 
-        # write the headers
+    # write the headers
+    writer.writerow([
+        smart_str(u"device_id"),
+        smart_str(u"latitude"),
+        smart_str(u"longitude"),
+        smart_str(u"accelerometer_x"),
+        smart_str(u"accelerometer_y"),
+        smart_str(u"accelerometer_z"),
+        smart_str(u"gyroscope_x"),
+        smart_str(u"gyroscope_y"),
+        smart_str(u"gyroscope_z"),
+        smart_str(u"timestamp"),
+    ])
+
+    # itterate over the data from database
+    for row in live_data:
         writer.writerow([
-            smart_str(u"device_id"),
-            smart_str(u"latitude"),
-            smart_str(u"longitude"),
-            smart_str(u"accelerometer_x"),
-            smart_str(u"accelerometer_y"),
-            smart_str(u"accelerometer_z"),
-            smart_str(u"gyroscope_x"),
-            smart_str(u"gyroscope_y"),
-            smart_str(u"gyroscope_z"),
-            smart_str(u"timestamp"),
+            smart_str(row.id),
+            smart_str(row.latitude),
+            smart_str(row.longitude),
+            smart_str(row.accelerometer_x),
+            smart_str(row.accelerometer_y),
+            smart_str(row.accelerometer_z),
+            smart_str(row.gyroscope_x),
+            smart_str(row.gyroscope_y),
+            smart_str(row.gyroscope_z),
+            smart_str(row.timestamp),
         ])
-
-        # itterate over the data from database
-        for row in live_data:
-            writer.writerow([
-                smart_str(row.id),
-                smart_str(row.latitude),
-                smart_str(row.longitude),
-                smart_str(row.accelerometer_x),
-                smart_str(row.accelerometer_y),
-                smart_str(row.accelerometer_z),
-                smart_str(row.gyroscope_x),
-                smart_str(row.gyroscope_y),
-                smart_str(row.gyroscope_z),
-                smart_str(row.timestamp),
-            ])
 
     return response
 
