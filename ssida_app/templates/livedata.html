@@ -4,14 +4,33 @@
 {% block content %}
 
 <div class="container">
-  <div class="row">
-    <div class="col-xs-12">
-      <H1>Raw Live Data</H1>
+      <div class="row">
+        <div class="col-xs-12">
+          <H1>Raw Live Data</H1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <p>Please click on the table headers for more information.</p>
+        </div>
+      </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#queryControl">Visualization</button>
+            <br/>
+            <div id="queryControl" class="collapse">
+                <br/>
+                <p>
+                    Here is a live plot of the incoming data.
+                </p>
+
+                <div id="g1"></div>
+            </div>
+            <br/>
+        </div>
     </div>
-      <div class="col-xs-12">
-      <p>Please click on the table headers for more information.</p>
-    </div>
-  </div>
+
       <div id="rawdata">
         <div class="table-responsive">
           <table class="table table-bordered table-striped" id="responseTable">
@@ -38,6 +57,9 @@
         </div>
       </div>
 </div>
+
+<!-- D3 for visualisations -->
+<script src="https://d3js.org/d3.v5.js"></script>
 
 <!-- JavaScripts -->
 <script src="{% static 'asyncServerDataLoad.js'%}"></script>
