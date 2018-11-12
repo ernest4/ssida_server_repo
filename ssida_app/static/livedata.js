@@ -1,5 +1,5 @@
 $(window).on('load', function () {
-    //---visualization code---
+    //---visualization code--- with help from Xinyue Wang ---
     // Define margins
     var margin = { top: 10, right: 10, bottom: 45, left: 55 };
 
@@ -10,7 +10,7 @@ $(window).on('load', function () {
     var svg_height = outer_height - margin.top - margin.bottom;
 
     // The year to display
-    display_year = 2007;
+    //let display_year = 2007;
 
     // define a function that filters data by year
     function dataFilter(value) {
@@ -19,32 +19,76 @@ $(window).on('load', function () {
     }
 
     //data formating for D3.js
-    function parseData(dataset){
-        let arr = [];
+    function parseData(dataset, test = false){
+        if (!test) {
+            let arr = [];
 
-        _.forEach(dataset, function(row){
-            let str = row.fields.device_id;
+            _.forEach(dataset, function(row){
+                let str = row.fields.device_id;
 
-            let item = {
-                pk : row.pk,
-                fields : { device_id : str.slice(str.length-7, str.length),
-                    latitude : +row.fields.latitude,
-                    longitude : +row.fields.longitude,
-                    accelerometer_x : +row.fields.accelerometer_x,
-                    accelerometer_y : +row.fields.accelerometer_y,
-                    accelerometer_z : +row.fields.accelerometer_z,
-                    gyroscope_x : +row.fields.gyroscope_x,
-                    gyroscope_y : +row.fields.gyroscope_y,
-                    gyroscope_z : +row.fields.gyroscope_z,
-                    timestamp : new Date(row.fields.timestamp)
+                let item = {
+                    pk : +row.pk,
+                    fields : { device_id : str.slice(str.length-7, str.length),
+                        latitude : +row.fields.latitude,
+                        longitude : +row.fields.longitude,
+                        accelerometer_x : +row.fields.accelerometer_x,
+                        accelerometer_y : +row.fields.accelerometer_y,
+                        accelerometer_z : +row.fields.accelerometer_z,
+                        gyroscope_x : +row.fields.gyroscope_x,
+                        gyroscope_y : +row.fields.gyroscope_y,
+                        gyroscope_z : +row.fields.gyroscope_z,
+                        timestamp : new Date(row.fields.timestamp)
+                    }
+                };
+
+                arr.push(item);
+            });
+
+            //console.log("parseData:: arr->"+arr[0].fields.accelerometer_x); //TESTING
+            return arr;
+        } else {
+            let arr = [];
+
+            let str1 = "com.google.android.gms.iid.InstanceID@4ee6c85";
+
+            let item1 = {
+                pk : 32812,
+                fields : { device_id : str1.slice(str1.length-7, str1.length),
+                    latitude : +0.0,
+                    longitude : +0.0,
+                    accelerometer_x : -0.03896594,
+                    accelerometer_y : 0.0074944496,
+                    accelerometer_z : 0.17051125,
+                    gyroscope_x : 0.22357668,
+                    gyroscope_y : 0.535118,
+                    gyroscope_z : -0.093462385,
+                    timestamp : new Date("2018-11-12T19:34:06.288Z")
                 }
             };
 
-            arr.push(item);
-        });
+            arr.push(item1);
 
-        //console.log("parseData:: arr->"+arr[0].fields.accelerometer_x); //TESTING
-        return arr;
+            let str2 = "com.google.android.gms.iid.InstanceID@4ee6c85";
+
+            let item2 = {
+                pk : 32811,
+                fields : { device_id : str2.slice(str2.length-7, str2.length),
+                    latitude : +0.0,
+                    longitude : +0.0,
+                    accelerometer_x : -0.039434314,
+                    accelerometer_y : 0.084646225,
+                    accelerometer_z : 0.04882002,
+                    gyroscope_x : 0.18753563,
+                    gyroscope_y : 0.36041048,
+                    gyroscope_z : -0.025045475,
+                    timestamp : new Date("2018-11-12T19:34:06.030Z")
+                }
+            };
+
+            arr.push(item2);
+
+            return arr;
+        }
     }
 
     //Create SVG element as a group with the margins transform applied to it
@@ -63,11 +107,11 @@ $(window).on('load', function () {
         .range([svg_height, 0]);
 
     //Create linear X scale for the time
-    /*var xScale = d3.scaleLinear()
+    var xScale = d3.scaleLinear()
         .domain([0, 100])
-        .range([0, svg_width]);*/
+        .range([0, svg_width]);
 
-    var xScale = d3.scaleTime().rangeRound([0, svg_width]);
+    //var xScale = d3.scaleTime().rangeRound([0, svg_width]);
 
     //Define Y axis
     var yAxis = d3.axisLeft()
@@ -128,7 +172,7 @@ $(window).on('load', function () {
         //let filtered_dataset = data.filter(dataFilter);
         let filtered_dataset = data; //no filtering...
 
-        filtered_dataset = parseData(filtered_dataset);
+        filtered_dataset = parseData(filtered_dataset, false);
 
         // Update the domain of the x scale
         //xScale.domain(filtered_datset.map(function(d) { return d.Company; }));
@@ -138,15 +182,28 @@ $(window).on('load', function () {
 
         /******** PERFORM DATA JOIN ************/
         // Join new data with old elements, if any.
-        var points = svg.selectAll("path")
-            .datum(filtered_dataset, function key(d) {
+        /*let points = svg.selectAll("path")
+            .data(filtered_dataset, function key(d) {
                 return d.pk;
-            });
+            });*/
+        let points = svg.selectAll("paths")
+                        .data(filtered_dataset);
+
 
         //Create a line for drawing
-        var line = d3.line()
-            .x(function(d) { return xScale(d.fields.timestamp)})
-            .y(function(d) { return yScale(d.fields.accelerometer_x)});
+        let line = d3.line()
+                    .x(function(d) { 
+                        console.log("d3.line():: x ->"+xScale(d.fields.accelerometer_x)); //TESTING
+                        return xScale(d.fields.accelerometer_x)*100;
+                        //return xScale(d.fields.timestamp)
+                    })
+                    .y(function(d) {
+                        console.log("d3.line():: y ->"+yScale(d.fields.accelerometer_x)); //TESTING
+                         return yScale(d.fields.accelerometer_x)
+                        });
+
+        /*xScale.domain(d3.extent(filtered_dataset, function(d) { return d.fields.timestamp }));
+        yScale.domain(d3.extent(filtered_dataset, function(d) { return d.fields.accelerometer_x }));*/
 
         /******** HANDLE UPDATE SELECTION ************/
         // Update the display of existing elelemnts to match new data
@@ -159,7 +216,7 @@ $(window).on('load', function () {
             .attr("stroke-linejoin", "round")
             .attr("stroke-linecap", "round")
             .attr("stroke-width", 1.5)
-            .attr("d", line);
+            .attr("d", line(filtered_dataset));
 
         /******** HANDLE ENTER SELECTION ************/
         // Create new elements in the dataset
@@ -168,13 +225,12 @@ $(window).on('load', function () {
             .append("path")
             .transition()
             .duration(2000)
-            .ease(d3.easeBounce)
             .attr("fill", "none")
             .attr("stroke", "steelblue")
             .attr("stroke-linejoin", "round")
             .attr("stroke-linecap", "round")
             .attr("stroke-width", 1.5)
-            .attr("d", line);
+            .attr("d", line(filtered_dataset));
 
         /******** HANDLE EXIT SELECTION ************/
         // Remove elements that not longer have a matching data element
@@ -185,7 +241,7 @@ $(window).on('load', function () {
             .remove();
 
         // Set the year label
-        d3.select("#year_header").text("Year: " + display_year)
+        //d3.select("#year_header").text("Year: " + display_year);
 
     }
 
@@ -270,6 +326,7 @@ $(window).on('load', function () {
         .text("Exiting");
     //---visualization code---
 
+    
     //getting data periodically, generating visualization and creating the table
     setInterval( function() { 
             getLiveData(8, function(data){
