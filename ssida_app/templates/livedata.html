@@ -9,25 +9,39 @@
           <H1>Raw Live Data</H1>
         </div>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <p>Please click on the table headers for more information.</p>
-        </div>
-      </div>
 
     <div class="row">
         <div class="col-xs-12">
-            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#queryControl">Visualization</button>
+            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#queryControl" id="visualizationButton">Visualization</button>
             <br/>
             <div id="queryControl" class="collapse">
                 <br/>
-                <p>
-                    Here is a live plot of the incoming data.
-                </p>
 
+                <p>
+                    Below is a live plot of the incoming data for a chosen device.
+                </p>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6">
+                        <label for="deviceIDinput"><span class="label label-danger">Mandatory</span> Choose device_id to filter e.g. c880c20, 4ee6c85 etc.</label>
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                        <input type="text" class="form-control" id="deviceIDinput" placeholder="rows" value="4ee6c85" required>
+                    </div>
+                    <div class="col-xs-12 col-sm-3">
+                        <button class="btn btn-success" id="deviceIDfilterButton">Filter</button>
+                        <button class="btn btn-info" data-toggle="popover" title="Filter" data-content="Choose a particular device identified by device ID to be exclusively displayed in the visualization. If unsure, please use the table below, looking at the device_id column. The device ID will be at the end of the string." data-placement="top" data-trigger="focus">?</button>
+                    </div>
+                  </div>
+                <br/>
                 <div id="g1"></div>
             </div>
             <br/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <p>Top 10 most recent live results. Please click on the table headers for more information.</p>
         </div>
     </div>
 
@@ -40,7 +54,7 @@
                     <th>{{key}}</th>
                   {% endfor %} -->
                     <th><button class="btn btn-success" data-toggle="popover" title="id" data-content="Primary key for each of the records" data-placement="bottom" data-trigger="focus">id</button></th>
-                    <th><button class="btn btn-info" data-toggle="popover" title="device_id" data-content="Identifies each unique install of the app. If the same device reinstalls the app, a new device id will be generated." data-placement="bottom" data-trigger="focus">device_id</button></th>
+                    <th><button class="btn btn-info" data-toggle="popover" title="device_id" data-content="Identifies each unique install of the app. If the same device reinstalls the app, a new device id will be generated. You may use the device ID at the end of the string (e.g. 4ee6c85) for the visualization filter above." data-placement="bottom" data-trigger="focus">device_id</button></th>
                     <th><button class="btn btn-info" data-toggle="popover" title="latitude" data-content="Location coordinate of the device" data-placement="bottom" data-trigger="focus">latitude</button></th>
                     <th><button class="btn btn-info" data-toggle="popover" title="longitude" data-content="Location coordinate of the device" data-placement="bottom" data-trigger="focus">longitude</button></th>
                     <th><button class="btn btn-info" data-toggle="popover" title="accelerometer_x" data-content="Acceleration of the device" data-placement="bottom" data-trigger="focus">accelerometer_x</button></th>

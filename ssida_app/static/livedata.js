@@ -1,94 +1,75 @@
 $(window).on('load', function () {
+    let visualisationActive = false;
+    let maxDisplayRowCount = 10; //for the table
+    let rows = maxDisplayRowCount; //rows to fetch
+
+    $( "#visualizationButton" ).on( "click", function() {
+        visualisationActive = !visualisationActive; //toggle
+        //let rows = $('#rowsInput').val();
+        if (visualisationActive) {
+            //get enough for both the plot and the table
+            rows = 200;
+        } else {
+            //get just the minimum needed for the table
+            rows = maxDisplayRowCount;
+        }
+        console.log("visButton:: rows -> "+rows);
+    });
+
+    let deviceID = "";
+    $( "#deviceIDfilterButton" ).on( "click", function() {
+        visualisationActive = !visualisationActive; //toggle
+        deviceID = $('#deviceIDinput').val();
+        console.log("visButton:: rows -> "+deviceID);
+    });
+
     //---visualization code--- with help from Xinyue Wang ---
     // Define margins
     var margin = { top: 10, right: 10, bottom: 45, left: 55 };
 
     //Width and height
-    var outer_width = 900;
+    var outer_width = 1000;
     var outer_height = 450;
     var svg_width = outer_width - margin.left - margin.right;
     var svg_height = outer_height - margin.top - margin.bottom;
 
     // The year to display
     //let display_year = 2007;
+    let firstRun = true;
 
     // define a function that filters data by year
     function dataFilter(value) {
-        return true; //all pass filter for now...
-        //return (value.Year == display_year)
+        //return true; //all pass filter for now...
+        return (value.fields.device_id == "com.google.android.gms.iid.InstanceID@"+deviceID);
     }
 
     //data formating for D3.js
-    function parseData(dataset, test = false){
-        if (!test) {
-            let arr = [];
+    function parseData(dataset){
+        let arr = [];
 
-            _.forEach(dataset, function(row){
-                let str = row.fields.device_id;
+        _.forEach(dataset, function(row){
+            let str = row.fields.device_id;
 
-                let item = {
-                    pk : +row.pk,
-                    fields : { device_id : str.slice(str.length-7, str.length),
-                        latitude : +row.fields.latitude,
-                        longitude : +row.fields.longitude,
-                        accelerometer_x : +row.fields.accelerometer_x,
-                        accelerometer_y : +row.fields.accelerometer_y,
-                        accelerometer_z : +row.fields.accelerometer_z,
-                        gyroscope_x : +row.fields.gyroscope_x,
-                        gyroscope_y : +row.fields.gyroscope_y,
-                        gyroscope_z : +row.fields.gyroscope_z,
-                        timestamp : new Date(row.fields.timestamp)
-                    }
-                };
-
-                arr.push(item);
-            });
-
-            //console.log("parseData:: arr->"+arr[0].fields.accelerometer_x); //TESTING
-            return arr;
-        } else {
-            let arr = [];
-
-            let str1 = "com.google.android.gms.iid.InstanceID@4ee6c85";
-
-            let item1 = {
-                pk : 32812,
-                fields : { device_id : str1.slice(str1.length-7, str1.length),
-                    latitude : +0.0,
-                    longitude : +0.0,
-                    accelerometer_x : -0.03896594,
-                    accelerometer_y : 0.0074944496,
-                    accelerometer_z : 0.17051125,
-                    gyroscope_x : 0.22357668,
-                    gyroscope_y : 0.535118,
-                    gyroscope_z : -0.093462385,
-                    timestamp : new Date("2018-11-12T19:34:06.288Z")
+            let item = {
+                pk : +row.pk,
+                fields : { device_id : str.slice(str.length-7, str.length),
+                    latitude : +row.fields.latitude,
+                    longitude : +row.fields.longitude,
+                    accelerometer_x : +row.fields.accelerometer_x,
+                    accelerometer_y : +row.fields.accelerometer_y,
+                    accelerometer_z : +row.fields.accelerometer_z,
+                    gyroscope_x : +row.fields.gyroscope_x,
+                    gyroscope_y : +row.fields.gyroscope_y,
+                    gyroscope_z : +row.fields.gyroscope_z,
+                    timestamp : new Date(row.fields.timestamp)
                 }
             };
 
-            arr.push(item1);
+            arr.push(item);
+        });
 
-            let str2 = "com.google.android.gms.iid.InstanceID@4ee6c85";
-
-            let item2 = {
-                pk : 32811,
-                fields : { device_id : str2.slice(str2.length-7, str2.length),
-                    latitude : +0.0,
-                    longitude : +0.0,
-                    accelerometer_x : -0.039434314,
-                    accelerometer_y : 0.084646225,
-                    accelerometer_z : 0.04882002,
-                    gyroscope_x : 0.18753563,
-                    gyroscope_y : 0.36041048,
-                    gyroscope_z : -0.025045475,
-                    timestamp : new Date("2018-11-12T19:34:06.030Z")
-                }
-            };
-
-            arr.push(item2);
-
-            return arr;
-        }
+        //console.log("parseData:: arr->"+arr[0].fields.accelerometer_x); //TESTING
+        return arr;
     }
 
     //Create SVG element as a group with the margins transform applied to it
@@ -101,50 +82,60 @@ $(window).on('load', function () {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // Create linear Y scale for sensor values
-    var yScale = d3.scaleLinear()
-        .domain([-10, 10])
+    function setAxesAndScales(xDomainMin, xDomainMax, yDomainMin, yDomainMax, firstRun){
+        // Create linear Y scale for sensor values
+        let yScale = d3.scaleLinear()
+        .domain([yDomainMin, yDomainMax])
         .range([svg_height, 0]);
 
-    //Create linear X scale for the time
-    var xScale = d3.scaleLinear()
-        .domain([0, 100])
-        .range([0, svg_width]);
+        //Create linear X scale for the time
+        let xScale = d3.scaleLinear()
+            .domain([xDomainMin, xDomainMax])
+            //.domain([30000, 33000]) //TESTING
+            .range([0, svg_width]);
 
-    //var xScale = d3.scaleTime().rangeRound([0, svg_width]);
+        //var xScale = d3.scaleTime().rangeRound([0, svg_width]);
 
-    //Define Y axis
-    var yAxis = d3.axisLeft()
-        .scale(yScale)
-        .ticks(5)
-        .tickFormat(d3.format(".0s"))
-        ;
+        //Define Y axis
+        let yAxis = d3.axisLeft()
+            .scale(yScale)
+            .ticks(5)
+            .tickFormat(d3.format(".0s"));
 
-    // Create an x-axis connected to the x scale
-    var xAxis = d3.axisBottom()
+        // Create an x-axis connected to the x scale
+        let xAxis = d3.axisBottom()
         .scale(xScale)
-        // .tickFormat(d3.format(".0s"))
-        .ticks(10, ".0s")
-        ;
+        .tickFormat(d3.format(""))
+        .ticks(25, "");
+
+        if (firstRun) {
+            //Create and attach the axes for the first run
+            // Attach and call the y axis
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("id", "y-axis")
+                .call(yAxis);
+
+            // Attach and call the x-axis
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("id", "x-axis")
+                .attr("transform", "translate(0," + svg_height + ")")
+                .call(xAxis);
+        } else {
+            //just call the axes for update...
+            svg.select("#y-axis").call(yAxis);
+            svg.select("#x-axis").call(xAxis);
+        }
+
+        return {xScale: xScale, yScale: yScale};
+    }
+
 
     // Define the div for the tooltip
     var div = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
-
-    // Call the y axis
-    svg.append("g")
-        .attr("class", "axis")
-        .attr("id", "y-axis")
-        .call(yAxis);
-
-    // All but call the x-axis
-    svg.append("g")
-        .attr("class", "axis")
-        .attr("id", "x-axis")
-        .attr("transform", "translate(0," + svg_height + ")")
-        .call(xAxis)
-        ;
 
     // text label for the x axis
     svg.append("text")
@@ -152,7 +143,7 @@ $(window).on('load', function () {
             "translate(" + (outer_width / 2) + " ," +
             (svg_height + margin.top + 30) + ")")
         .style("text-anchor", "middle")
-        .text("Time");
+        .text("Time: Rows of data for a particular device. 4 rows (not ticks!) represent 1 second of time.");
 
     // text label for the y axis
     svg.append("text")
@@ -168,17 +159,21 @@ $(window).on('load', function () {
         //console.log("generateVis:: data->"+data[0].pk); //TESTING
         //console.log("generateVis:: data->"+data[0].fields.device_id); //TESTING
 
+        let xMin = data[0].pk;
+        let xMax = data[data.length-1].pk;
+        let yMin = -30;
+        let yMax = 30;
+        let scales = setAxesAndScales(xMin, xMax, yMin, yMax, firstRun);
+        if (firstRun) { firstRun = !firstRun };
+
         // Filter the data to only include the current year
-        //let filtered_dataset = data.filter(dataFilter);
-        let filtered_dataset = data; //no filtering...
+        let filtered_dataset = data.filter(dataFilter);
+        //let filtered_dataset = data; //no filtering...
 
-        filtered_dataset = parseData(filtered_dataset, false);
+        //filtered_dataset = parseData(filtered_dataset);
 
-        // Update the domain of the x scale
-        //xScale.domain(filtered_datset.map(function(d) { return d.Company; }));
-
-        // Call the x-axis
-        svg.select("#x-axis").call(xAxis);
+        //Prepare canvas
+        //d3.select('svg').selectAll('path').remove();
 
         /******** PERFORM DATA JOIN ************/
         // Join new data with old elements, if any.
@@ -186,21 +181,19 @@ $(window).on('load', function () {
             .data(filtered_dataset, function key(d) {
                 return d.pk;
             });*/
-        let points = svg.selectAll("paths")
+
+        let points = svg.selectAll("path")
                         .data(filtered_dataset);
 
 
         //Create a line for drawing
         let line = d3.line()
                     .x(function(d) { 
-                        console.log("d3.line():: x ->"+xScale(d.fields.accelerometer_x)); //TESTING
-                        return xScale(d.fields.accelerometer_x)*100;
-                        //return xScale(d.fields.timestamp)
+                        return scales.xScale(+d.pk);
                     })
                     .y(function(d) {
-                        console.log("d3.line():: y ->"+yScale(d.fields.accelerometer_x)); //TESTING
-                         return yScale(d.fields.accelerometer_x)
-                        });
+                        return scales.yScale(d.fields.accelerometer_x)
+                    });
 
         /*xScale.domain(d3.extent(filtered_dataset, function(d) { return d.fields.timestamp }));
         yScale.domain(d3.extent(filtered_dataset, function(d) { return d.fields.accelerometer_x }));*/
@@ -209,8 +202,8 @@ $(window).on('load', function () {
         // Update the display of existing elelemnts to match new data
         // Perform a data join and add points to the chart
         points
-            .transition()
-            .duration(2000)
+            //.transition()
+            //.duration(2000)
             .attr("fill", "none")
             .attr("stroke", "steelblue")
             .attr("stroke-linejoin", "round")
@@ -223,8 +216,8 @@ $(window).on('load', function () {
         // Perform a data join and add points to the chart
         points.enter()
             .append("path")
-            .transition()
-            .duration(2000)
+            //.transition()
+            //.duration(2000)
             .attr("fill", "none")
             .attr("stroke", "steelblue")
             .attr("stroke-linejoin", "round")
@@ -236,8 +229,8 @@ $(window).on('load', function () {
         // Remove elements that not longer have a matching data element
         points.exit()
             .style("fill", "red")
-            .transition()
-            .duration(2000)
+            //.transition()
+            //.duration(2000)
             .remove();
 
         // Set the year label
@@ -256,8 +249,7 @@ $(window).on('load', function () {
     .attr("width", rect_width)
     .attr("height", rect_height)
     .style("fill", "lightsteelblue")
-    .style("opacity",.9)
-    ;
+    .style("opacity",.9);
 
     //Add legend rects and Text
     var legend_circle_r = svg_width*0.01;
@@ -267,8 +259,7 @@ $(window).on('load', function () {
     .attr("y", legend_margin.top)
     .attr("width", legend_circle_r)
     .attr("height", legend_circle_r)
-    .style("fill", "blue")
-    ;
+    .style("fill", "blue");
 
     svg.append("rect")
     // .attr("id","blue")
@@ -276,8 +267,7 @@ $(window).on('load', function () {
     .attr("y", legend_margin.top+gap+legend_circle_r)
     .attr("width", legend_circle_r)
     .attr("height", legend_circle_r)
-    .style("fill", "green")
-    ;
+    .style("fill", "green");
 
     svg.append("rect")
     // .attr("id","blue")
@@ -285,8 +275,7 @@ $(window).on('load', function () {
     .attr("y", legend_margin.top+2*(gap+legend_circle_r))
     .attr("width", legend_circle_r)
     .attr("height", legend_circle_r)
-    .style("fill", "orange")
-    ;
+    .style("fill", "orange");
 
     svg.append("rect")
     // .attr("id","blue")
@@ -294,46 +283,43 @@ $(window).on('load', function () {
     .attr("y", legend_margin.top+3*(gap+legend_circle_r))
     .attr("width", legend_circle_r)
     .attr("height", legend_circle_r)
-    .style("fill", "red")
-    ;
+    .style("fill", "red");
 
     svg.append("text")
     .attr("transform",
             "translate(" + (svg_width-rect_width+legend_margin.left+legend_circle_r+gap) + " ," +
             (legend_margin.top+10) + ")")
         // .style("text-anchor", "middle")
-        .text("New Enter");
+        .text("--");
 
     svg.append("text")
     .attr("transform",
             "translate(" + (svg_width-rect_width+legend_margin.left+legend_circle_r+gap) + " ," +
             (legend_margin.top+10+gap+legend_circle_r) + ")")
         // .style("text-anchor", "middle")
-        .text("Update");
+        .text("--");
 
     svg.append("text")
     .attr("transform",
             "translate(" + (svg_width-rect_width+legend_margin.left+legend_circle_r+gap) + " ," +
             (legend_margin.top+2*(gap+legend_circle_r)+10) + ")")
         // .style("text-anchor", "middle")
-        .text("Missing Value");
+        .text("--");
 
     svg.append("text")
     .attr("transform",
             "translate(" + (svg_width-rect_width+legend_margin.left+legend_circle_r+gap) + " ," +
             (legend_margin.top+3*(gap+legend_circle_r)+10) + ")")
         // .style("text-anchor", "middle")
-        .text("Exiting");
+        .text("--");
     //---visualization code---
 
     
     //getting data periodically, generating visualization and creating the table
     setInterval( function() { 
-            getLiveData(8, function(data){
+            getLiveData(rows, function(data){
 
             //---visualization code---
-            // Call the x-axis
-            svg.select("#x-axis").call(xAxis);
             // Generate the visualisation
             generateVis(data);
             //---visualization code---
@@ -349,8 +335,15 @@ $(window).on('load', function () {
             tableBody.setAttribute("id", "tbody_response");
             table.appendChild(tableBody);
 
+
+            let currentRowCount = 0;
             //populate the new table body with fresh data
             _.forEach(data, function(row){
+                if (currentRowCount == maxDisplayRowCount) { //breaks out for foreach loop
+                    return false;
+                } //else...
+                currentRowCount++;
+
                 //for each record from database, create a row
                 let tr = document.createElement("tr");
 

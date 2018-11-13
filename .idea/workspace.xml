@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="56ba4fe8-05a3-4c96-a622-6c092db5d65f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/ssida_app/static/livedata.js" beforeDir="false" afterPath="$PROJECT_DIR$/ssida_app/static/livedata.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssida_app/templates/livedata.html" beforeDir="false" afterPath="$PROJECT_DIR$/ssida_app/templates/livedata.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -75,14 +76,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="156" />
-          <entry key="html" value="2273" />
+          <entry key="html" value="2857" />
           <entry key="js" value="612" />
           <entry key="py" value="2876" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="2273" />
+          <entry key="HTML" value="2857" />
           <entry key="JavaScript" value="612" />
           <entry key="Python" value="3032" />
         </counts>
@@ -164,8 +165,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ssida_app/templates/storeddata.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="178" column="49" lean-forward="true" selection-start-line="178" selection-start-column="49" selection-end-line="178" selection-end-column="49" />
+            <state relative-caret-position="374">
+              <caret line="97" column="104" lean-forward="true" selection-start-line="97" selection-start-column="104" selection-end-line="97" selection-end-column="104" />
             </state>
           </provider>
         </entry>
@@ -173,8 +174,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ssida_app/templates/livedata.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="61" column="49" selection-start-line="61" selection-start-column="49" selection-end-line="61" selection-end-column="49" />
+            <state relative-caret-position="238">
+              <caret line="56" column="288" selection-start-line="56" selection-start-column="288" selection-end-line="56" selection-end-column="288" />
             </state>
           </provider>
         </entry>
@@ -344,7 +345,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20238096" />
@@ -588,13 +589,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ssida_app/templates/storeddata.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="178" column="49" lean-forward="true" selection-start-line="178" selection-start-column="49" selection-end-line="178" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ssida_app/static/livedata.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3876">
@@ -602,10 +596,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ssida_app/templates/storeddata.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="97" column="104" lean-forward="true" selection-start-line="97" selection-start-column="104" selection-end-line="97" selection-end-column="104" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ssida_app/templates/livedata.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="61" column="49" selection-start-line="61" selection-start-column="49" selection-end-line="61" selection-end-column="49" />
+        <state relative-caret-position="238">
+          <caret line="56" column="288" selection-start-line="56" selection-start-column="288" selection-end-line="56" selection-end-column="288" />
         </state>
       </provider>
     </entry>
