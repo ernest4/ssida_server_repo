@@ -17,6 +17,7 @@ urlpatterns = [
     path('whatissidda', ssida_app.views.whatIsSidda, name='whatissidda'),
     path('ourteam', ssida_app.views.ourTeam, name='ourTeam'),
     path('howanalyticsworks', ssida_app.views.howAnalyticsWorks, name='howanalyticsworks'),
+    path('updatemaptable', ssida_app.views.updateMapTable, name='updatemaptable'),
 
     #apis
     path('agreetocookie', ssida_app.views.agreeToCookie, name='agreetocookie'),

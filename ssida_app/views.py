@@ -269,3 +269,14 @@ def db(request):
 
     return render(request, 'db.html', {'greetings': greetings})
 
+
+
+#this is for Rory's algorithm
+def updateMapTable(request):
+    isSuccessful = False
+
+    # Call Rory's function...
+    #isSuccessful = rorysFunction(args)
+
+    return render(request, 'updatetmaptable.html', {'isSuccessful': isSuccessful})
+
