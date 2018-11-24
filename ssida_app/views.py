@@ -8,6 +8,7 @@ import csv
 from django.utils.encoding import smart_str
 from django.contrib.auth.decorators import login_required
 import json
+from ssida_app.algorithm import compute_geo_score
 
 # Create your views here.
 def index(request):
@@ -271,12 +272,8 @@ def db(request):
 
 
 
-#this is for Rory's algorithm
 def updateMapTable(request):
-    isSuccessful = False
+    is_successful = compute_geo_score()
 
-    # Call Rory's function...
-    #isSuccessful = rorysFunction(args)
-
-    return render(request, 'updatetmaptable.html', {'isSuccessful': isSuccessful})
+    return render(request, 'updatetmaptable.html', {'isSuccessful': is_successful})
 
