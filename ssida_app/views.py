@@ -273,7 +273,7 @@ def db(request):
 
 
 def updateMapTable(request):
-    is_successful = compute_geo_score()
+    is_successful = compute_geo_score(begin_timestamp="2018-11-18 14:20:00.000000+00:00", end_timestamp="2018-11-18 15:30:00.000000+00:00")
 
     return render(request, 'updatetmaptable.html', {'isSuccessful': is_successful})
 

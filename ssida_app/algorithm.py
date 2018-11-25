@@ -30,7 +30,9 @@ def compute_geo_score(begin_timestamp=None, end_timestamp=None):
         device_id = live_data.device_id
         acceleration = live_data.accelerometer_x
         time_in_s = convert_to_seconds(str(live_data.timestamp))
-        if acceleration > epsilon and begin_time < time_in_s < end_time:
+        latitude = live_data.latitude
+        longitude = live_data.longitude
+        if acceleration > epsilon and begin_time < time_in_s < end_time and latitude != 0.0 and longitude != 0.0:
             last_time_encountered = device_last_time_encountered.get(device_id, 0.0)
             if time_in_s - last_time_encountered > time_out:  # Current acceleration window no longer has contiguous data
                 device_current_acceleration_window[device_id] = []  # Throw away old and create new acceleration window
@@ -43,8 +45,8 @@ def compute_geo_score(begin_timestamp=None, end_timestamp=None):
                     if len(current_acceleration_window) > min_window_len:
                         score = normalised_coefficient_of_variation(current_acceleration_window)
                         score_data = ScoreData()
-                        score_data.latitude = live_data.latitude
-                        score_data.longitude = live_data.longitude
+                        score_data.latitude = latitude
+                        score_data.longitude = longitude
                         score_data.score = score
                         score_data.save()
 
