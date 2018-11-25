@@ -8,7 +8,7 @@ import csv
 from django.utils.encoding import smart_str
 from django.contrib.auth.decorators import login_required
 import json
-from ssida_app.algorithm import compute_geo_score
+from ssida_app.algorithm_offline_data import compute_geo_score
 
 # Create your views here.
 def index(request):
