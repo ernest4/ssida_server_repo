@@ -8,6 +8,7 @@ gunicorn = "*"
 django-heroku = "*"
 numpy = "*"
 pandas = "*"
+plotly = "*"
 
 [requires]
 python_version = "3.6"

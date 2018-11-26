@@ -8,7 +8,7 @@ import csv
 from django.utils.encoding import smart_str
 from django.contrib.auth.decorators import login_required
 import json
-from ssida_app.algorithm_offline_data import compute_geo_score
+from ssida_app.algorithm_offline_data_plotted import compute_geo_score
 
 # Create your views here.
 def index(request):
@@ -271,9 +271,13 @@ def db(request):
     return render(request, 'db.html', {'greetings': greetings})
 
 
-
+# http://localhost:5000/updatemaptable?begintimestamp=2018-11-18%2014:20:00.000000%2B00:00&endtimestamp=2018-11-18%2015:30:00.000000%2B00:00
 def updateMapTable(request):
-    is_successful = compute_geo_score(begin_timestamp="2018-11-18 14:20:00.000000+00:00", end_timestamp="2018-11-18 15:30:00.000000+00:00")
+    params = request.GET
+    begin_timestamp = params.get('begintimestamp')  # 2018-11-18 14:20:00.000000+00:00
+    end_timestamp = params.get('endtimestamp')  # 2018-11-18 15:30:00.000000+00:00
+
+    is_successful = compute_geo_score(begin_timestamp=begin_timestamp, end_timestamp=end_timestamp)
 
     return render(request, 'updatetmaptable.html', {'isSuccessful': is_successful})
 
