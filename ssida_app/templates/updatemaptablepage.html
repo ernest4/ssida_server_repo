@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Map Database Updated Page</h2>
+        </div>
+    </div>
+    <form class="form-inline" action="/updatemaptable">
+        <button type="button" class="btn btn-primary mb-2" id="startTimeGenerateBtn">Generate Start Time</button>
+        <div class="form-group mx-sm-3 mb-2">
+            <!-- <label for="inputStartTime">Start Time</label> -->
+            <input type="text" readonly name="begintimestamp" class="form-control" id="inputStartTime" placeholder="start time here" required>
+        </div>
+
+        <br/>
+        <br/>
+
+        <button type="button" class="btn btn-primary mb-2" id="endTimeGenerateBtn">Generate End Time</button>
+        <div class="form-group mx-sm-3 mb-2">
+            <!-- <label for="inputStartTime">Start Time</label> -->
+            <input type="text" readonly name="endtimestamp" class="form-control" id="inputEndTime" placeholder="end time here" required>
+        </div>
+
+        <br/>
+        <br/>
+
+        <!-- <button type="button" class="btn btn-primary mb-2" id="endTimeGenerateBtn">Generate End Time</button> -->
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="inputTimeWindow">Start Time</label>
+            <input type="text" readonly name="timewindow" class="form-control" id="inputTimeWindow" placeholder="time window here" required>
+        </div>
+
+        <br/>
+        <br/>
+        <button type="submit" class="btn btn-primary mb-2" id="submitFormBtn">Submit</button>
+    </form>
+</div>
+<script>
+    $(window).on('load', function () {
+        let startTime;
+        let endTime;
+
+        $( "#startTimeGenerateBtn" ).on( "click", function() {
+            //Target = 2018-11-18%2014:20:00.000000%2B00:00
+            let dateTime = generateCurrentTime();
+            document.getElementById("inputStartTime").value = dateTime.datetime;
+            startTime = dateTime.currentdate;
+        });
+
+        $( "#endTimeGenerateBtn" ).on( "click", function() {
+            //Target = 2018-11-18%2014:20:00.000000%2B00:00
+            let dateTime = generateCurrentTime();
+            document.getElementById("inputEndTime").value = dateTime.datetime;
+            endTime = dateTime.currentdate;
+
+            //Compute the time window size
+            let windowSize = (endTime.getTime() - startTime.getTime())/1000;
+            let reducedWindowSize = windowSize*0.9;
+            if (reducedWindowSize > 60) reducedWindowSize = 60;
+            document.getElementById("inputTimeWindow").value = Math.floor(reducedWindowSize);
+        });
+
+        function generateCurrentTime(){
+            let currentdate = new Date();
+            let datetime = currentdate.getFullYear() + "-"
+                            + (currentdate.getMonth()+1)  + "-"
+                            + currentdate.getDate() + " "
+                            + currentdate.getHours() + ":"
+                            + currentdate.getMinutes() + ":"
+                            + currentdate.getSeconds() + ".000000" + "+"
+                            //+ "timezone";
+                            + "00:00"; //should be the same as we're in Ireland
+
+            return {datetime: datetime, currentdate: currentdate};
+        }
+    });
+</script>
+{% endblock %}

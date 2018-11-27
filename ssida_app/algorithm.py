@@ -4,7 +4,8 @@ from datetime import datetime
 from ssida_app.models import LiveData, ScoreData
 
 
-time_out = 2.0
+#time_out = 2.0
+time_out = 1000 #ignore time out for demo
 
 normalise_min = 0.75
 normalise_max = 1.25

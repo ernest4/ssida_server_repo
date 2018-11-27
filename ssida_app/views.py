@@ -270,6 +270,8 @@ def db(request):
 
     return render(request, 'db.html', {'greetings': greetings})
 
+def updateMapTablePage(request):
+    return render(request, 'updatemaptablepage.html')
 
 # http://localhost:5000/updatemaptable?begintimestamp=2018-11-18%2014:20:00.000000%2B00:00&endtimestamp=2018-11-18%2015:30:00.000000%2B00:00&timewindow=60.0
 def updateMapTable(request):
