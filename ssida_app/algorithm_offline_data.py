@@ -5,7 +5,8 @@ from datetime import datetime
 from ssida_app.models import ScoreData
 
 
-time_out = 2.0
+time_out = 15.0
+min_window_len = 10
 
 normalise_min = 0.75
 normalise_max = 1.25

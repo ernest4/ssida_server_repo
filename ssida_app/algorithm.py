@@ -4,8 +4,8 @@ from datetime import datetime
 from ssida_app.models import LiveData, ScoreData
 
 
-#time_out = 2.0
-time_out = 1000 #ignore time out for demo
+time_out = 15.0
+min_window_len = 10
 
 normalise_min = 0.75
 normalise_max = 1.25
@@ -15,7 +15,6 @@ epsilon = 0.0000001
 # Compute Score for latitude-longitude geo-locations
 def compute_geo_score(time_window, begin_timestamp=None, end_timestamp=None):
     time_window_size = time_window
-    min_window_len = int(time_window_size * (2.0 / 3.0))
     if begin_timestamp is not None and end_timestamp is not None:
         begin_time = convert_to_seconds(str(begin_timestamp))
         end_time = convert_to_seconds(str(end_timestamp))
