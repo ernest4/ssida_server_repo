@@ -60,7 +60,7 @@
             //Compute the time window size
             let windowSize = (endTime.getTime() - startTime.getTime())/1000;
             let reducedWindowSize = windowSize*0.9;
-            if (reducedWindowSize > 60) reducedWindowSize = 60;
+            if (reducedWindowSize > 10) reducedWindowSize = 10;
             document.getElementById("inputTimeWindow").value = Math.floor(reducedWindowSize);
         });
 
